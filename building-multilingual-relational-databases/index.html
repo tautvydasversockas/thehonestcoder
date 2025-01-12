@@ -1,0 +1,660 @@
+<!DOCTYPE html><html lang="en-gb"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Building Multilingual Relational Databases: Approaches and Tradeoffs - The Honest Coder</title><meta name="description" content="Learn to design and build multilingual software applications for global audiences."><meta name="generator" content="Publii Open-Source CMS for Static Site"><link rel="stylesheet" href="https://tautvydasversockas.github.io/thehonestcoder./media/plugins/syntaxHighlighter/prism-black.css"><link rel="canonical" href="https://tautvydasversockas.github.io/thehonestcoder./building-multilingual-relational-databases/"><link rel="alternate" type="application/atom+xml" href="https://tautvydasversockas.github.io/thehonestcoder./feed.xml"><link rel="alternate" type="application/json" href="https://tautvydasversockas.github.io/thehonestcoder./feed.json"><meta property="og:title" content="Building Multilingual Relational Databases: Approaches and Tradeoffs"><meta property="og:image" content="https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/one-table-to-rule-them-all-featured.webp"><meta property="og:image:width" content="1383"><meta property="og:image:height" content="830"><meta property="og:site_name" content="The Honest Coder"><meta property="og:description" content="Learn to design and build multilingual software applications for global audiences."><meta property="og:url" content="https://tautvydasversockas.github.io/thehonestcoder.//building-multilingual-relational-databases/"><meta property="og:type" content="article"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@TheHonestCoder"><meta name="twitter:title" content="Building Multilingual Relational Databases: Approaches and Tradeoffs"><meta name="twitter:description" content="Learn to design and build multilingual software applications for global audiences."><meta name="twitter:image" content="https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/one-table-to-rule-them-all-featured.webp"><link rel="shortcut icon" href="https://tautvydasversockas.github.io/thehonestcoder./media/website/hc-favicon.png" type="image/x-icon"><link rel="preload" href="https://tautvydasversockas.github.io/thehonestcoder./assets/dynamic/fonts/publicsans/publicsans.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="https://tautvydasversockas.github.io/thehonestcoder./assets/css/style.css?v=30c72d59656faab72e55eb4b4a720e22"><script type="application/ld+json">{"@context":"http://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://tautvydasversockas.github.io/thehonestcoder./building-multilingual-relational-databases/"},"headline":"Building Multilingual Relational Databases: Approaches and Tradeoffs","datePublished":"2022-09-20T00:00+03:00","dateModified":"2025-01-12T18:26+02:00","image":{"@type":"ImageObject","url":"https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/one-table-to-rule-them-all-featured.webp","height":830,"width":1383},"description":"Learn to design and build multilingual software applications for global audiences.","author":{"@type":"Person","name":"Tautvydas Versockas","url":"https://tautvydasversockas.github.io/thehonestcoder./authors/tautvydas-versockas/"},"publisher":{"@type":"Organization","name":"Tautvydas Versockas","logo":{"@type":"ImageObject","url":"https://tautvydasversockas.github.io/thehonestcoder./media/website/hex-logo.webp","height":100,"width":100}}}</script><noscript><style>img[loading] {
+                    opacity: 1;
+                }</style></noscript></head><body class="post-template"><div class="container"><div class="left-bar"><div class="left-bar__inner"><header class="header"><a class="logo" href="https://tautvydasversockas.github.io/thehonestcoder./"><img src="https://tautvydasversockas.github.io/thehonestcoder./media/website/hex-logo.webp" alt="The Honest Coder" width="100" height="100"></a><nav class="navbar"><button class="navbar__toggle" aria-label="Menu" aria-haspopup="true" aria-expanded="false"><span class="navbar__toggle__box"><span class="navbar__toggle__inner">Menu</span></span></button><ul class="navbar__menu"><li><a href="https://tautvydasversockas.github.io/thehonestcoder./" target="_self" aria-label="Home"><span>Home</span></a></li><li><a href="https://tautvydasversockas.github.io/thehonestcoder./about/" target="_self" aria-label="About me"><span>About me</span></a></li><li><a href="https://tautvydasversockas.github.io/thehonestcoder./speaking/" target="_self" aria-label="Speaking"><span>Speaking</span></a></li></ul></nav><a class="logo logo--atbottom" href="https://tautvydasversockas.github.io/thehonestcoder./"><img src="https://tautvydasversockas.github.io/thehonestcoder./media/website/hex-logo.webp" alt="The Honest Coder" width="100" height="100"></a></header></div></div><main class="main post"><article class="content content--attop"><header class="hero content__header"><div class="main__inner"><h1>Building Multilingual Relational Databases: Approaches and Tradeoffs</h1></div></header><div class="main__inner"><div class="content__meta"><div class="content__date"><time datetime="2022-09-20T00:00">Sep 20, 2022</time></div><span class="meta-separator date-meta-separator">•</span> <span class="meta-separator reading-time-meta-separator">•</span><div class="content__maintag"><a href="https://tautvydasversockas.github.io/thehonestcoder./tags/system-design/" class="metadata__maintag">System Design</a></div></div><div class="content__entry"><blockquote><p>If you talk to a man in a language he understands, that goes to his head. If you talk to him in his language, that goes to his heart.</p><div> </div><div><cite class="uagb-blockquote__author">- Nelson Mandela</cite></div></blockquote><p>Building software applications for global audiences is challenging. One critical aspect that software engineers have to consider is making these applications speak different languages. A widely used approach is to use translated resource files. However, moving them to a database might be a good alternative for cases where you need to make translations more dynamic. There are multiple ways of building multilingual relational databases. Yet, one must understand both the approaches and the tradeoffs before starting.</p><h2 class="wp-block-heading">Denormalizing Translations as Columns</h2><p>A straightforward way to build multilingual relational databases is to add denormalized translation columns for each supported language.</p><figure class="post__image post__image--center"><img loading="lazy" src="https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/denormalized-translations-table.webp" alt="Denormalized translations table." width="600" height="215" sizes="(min-width: 760px) 660px, calc(93.18vw - 30px)" srcset="https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/denormalized-translations-table-xs.webp 320w, https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/denormalized-translations-table-sm.webp 480w, https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/denormalized-translations-table-md.webp 768w, https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/denormalized-translations-table-xl.webp 1024w"></figure><p>This approach is lightning-fast to implement. It provides a significant advantage over the other approaches when you want to release your application as quickly and cheaply as possible. Moreover, it makes queries easy to understand and super quick to execute since it doesn't introduce additional joins.</p><figure class="post__image post__image--wide"><img loading="lazy" src="https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/proposing-solution.webp" alt="Proposing a solution." width="2032" height="1152" sizes="(min-width: 760px) 660px, calc(93.18vw - 30px)" srcset="https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/proposing-solution-xs.webp 320w, https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/proposing-solution-sm.webp 480w, https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/proposing-solution-md.webp 768w, https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/proposing-solution-xl.webp 1024w"></figure><p>However, this approach works best only if you have a few tables to translate and the small number of languages you wish to support is not likely to change. Adding additional language requires modifying tables. Furthermore, it requires changing all relevant database queries. It's possible to avoid changing queries manually by making them dynamic, but it comes with its own cost of maintainability and potential runtime issues.</p><h2 class="wp-block-heading">Serializing Translations</h2><p>Another approach is to serialize translations into a single field. Unlike the previous method, it allows adding additional language support without modifying tables. JSON and XML are the most popular serialization formats since most relational databases provide ways of querying the data directly from JSON/XML fields.</p><figure class="post__image post__image--center"><img loading="lazy" src="https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/json-serialized-translations-table.webp" alt="JSON translations table." width="600" height="268" sizes="(min-width: 760px) 660px, calc(93.18vw - 30px)" srcset="https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/json-serialized-translations-table-xs.webp 320w, https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/json-serialized-translations-table-sm.webp 480w, https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/json-serialized-translations-table-md.webp 768w, https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/json-serialized-translations-table-xl.webp 1024w"></figure><p>The problem, however, is that different RDBMS implementations have different ways of querying the data. As a result, it couples queries to a concrete RDBMS implementation. Not to mention that additional JSON/XML parsing adds overhead which might slow down your application. Did I mention that thinking about importing translations into serialization-based multilingual applications automatically makes me roll up my sleeves?</p><figure class="post__image post__image--wide"><img loading="lazy" src="https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/json-translations.webp" alt="I said Jason, not JSON." width="1527" height="495" sizes="(min-width: 760px) 660px, calc(93.18vw - 30px)" srcset="https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/json-translations-xs.webp 320w, https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/json-translations-sm.webp 480w, https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/json-translations-md.webp 768w, https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/json-translations-xl.webp 1024w"></figure><p>This approach could work for small applications that have little to translate and are coupled with concrete RDBMS implementations.</p><h2 class="wp-block-heading">Building Shared Translation Tables</h2><p>Creating shared translation tables is a more scalable approach to building multilingual relational databases. Unlike the previously listed methods, it allows adding translations without adjusting the original table.</p><figure class="post__image post__image--center"><img loading="lazy" src="https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/shared-translation-table.webp" alt="Shared translations table." width="600" height="859" sizes="(min-width: 760px) 660px, calc(93.18vw - 30px)" srcset="https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/shared-translation-table-xs.webp 320w, https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/shared-translation-table-sm.webp 480w, https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/shared-translation-table-md.webp 768w, https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/shared-translation-table-xl.webp 1024w"></figure><p>Having all the translations in a single place makes managing it remarkably easy. Additionally, importing and exporting translations as a single file is child's play, which becomes relevant when outsourcing translation services.</p><figure class="post__image post__image--wide"><img loading="lazy" src="https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/one-table-to-rule-them-all-featured-2.webp" alt="One table to rule them all - Lord of The Rings." width="1383" height="830" sizes="(min-width: 760px) 660px, calc(93.18vw - 30px)" srcset="https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/one-table-to-rule-them-all-featured-2-xs.webp 320w, https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/one-table-to-rule-them-all-featured-2-sm.webp 480w, https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/one-table-to-rule-them-all-featured-2-md.webp 768w, https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/one-table-to-rule-them-all-featured-2-xl.webp 1024w"></figure><p>While close to being ideal, this approach has some severe drawbacks. The biggest one is having to execute <em>n</em> table joins for <em>n</em> translatable fields for <em>x</em> tables being translated. And you better hope that you won't need user-specific translations, which would result in even more table joins. This is a significant overhead!</p><p>Another drawback is that translatable tables have foreign key references to the translations table. This complicates deleting and reinserting translations, which is common while importing data.</p><h2 class="wp-block-heading">Building Entity Translation Tables</h2><p>Building a separate table for each translatable entity is another flexible approach. It requires only one join on <em>n</em> translatable fields, eliminating the join hell described previously. As a bonus, this approach has no problems deleting or reinserting translations.</p><figure class="post__image post__image--center"><img loading="lazy" src="https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/entity-translations-table.webp" alt="Entity translations table." width="1000" height="636" sizes="(min-width: 760px) 660px, calc(93.18vw - 30px)" srcset="https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/entity-translations-table-xs.webp 320w, https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/entity-translations-table-sm.webp 480w, https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/entity-translations-table-md.webp 768w, https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/entity-translations-table-xl.webp 1024w"></figure><p>The benefits, however, come with the burden of building and maintaining many entity translation tables.</p><h2 class="wp-block-heading">Translating Labels</h2><p>If your multilingual application is not a purely data-driven API, the whole system, including labels, buttons, etc., will likely need to be translated. The entity translation tables approach described above could be utilized by creating tables such as <em>buttons</em> and <em>buttons_translations</em>. However, that would make adding and maintaining translations unnecessarily complex. A simpler solution is to create a table dedicated solely to generic translations.</p><figure class="post__image post__image--center"><img loading="lazy" src="https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/generic-translations-table-2.webp" alt="Generic translations table." width="600" height="276" sizes="(min-width: 760px) 660px, calc(93.18vw - 30px)" srcset="https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/generic-translations-table-2-xs.webp 320w, https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/generic-translations-table-2-sm.webp 480w, https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/generic-translations-table-2-md.webp 768w, https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/generic-translations-table-2-xl.webp 1024w"></figure><p>The <em>generic_translations</em> table becomes incredibly close to a generic key-value store. If necessary, you could move these translations to any <a href="https://tautvydasversockas.github.io/thehonestcoder./choosing-the-right-database/" target="_blank" rel="noopener noreferrer">NoSQL</a> key-value store and share them between multiple applications.</p><h2 class="wp-block-heading">Building a Table for Languages</h2><p>Notice that all the table examples above use ISO two-letter language codes (<em>de</em>, <em>en</em>, etc.) instead of having foreign key references to an additional languages table. This approach works well since country codes can be used as natural keys to avoid additional language lookups. Moreover, it's extremely unlikely for language codes to change. However, ISO two-letter language codes do not cover all edge cases. Using ISO IETF language tags instead would make sense if you had to support multiple language cultures such as <em>en-US/en-GB</em> (color vs colour), <em>de-CH/de-DE</em> (ss vs ß), etc. Now, suppose you were dealing with public or legal domains. In that case, it could also make sense to use IANA language tags such as <em>de-1901</em> and <em>de-1996</em> since there was an orthography reform in 1996 or <em>az-Arab</em> and <em>az-Cyrl</em> since in 1991 Azerbaijan's parliament voted to replace the Cyrillic alphabet with Latin. If you aren't sure whether you'll need to support these language differences or would rather be safe than sorry, going for a separate table for languages is probably not a bad idea.</p><figure class="post__image post__image--center"><img loading="lazy" src="https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/langauges-table.webp" alt="Languages table." width="250" height="324" sizes="(min-width: 760px) 660px, calc(93.18vw - 30px)" srcset="https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/langauges-table-xs.webp 320w, https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/langauges-table-sm.webp 480w, https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/langauges-table-md.webp 768w, https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/langauges-table-xl.webp 1024w"></figure><h2 class="wp-block-heading">Ensuring Fallback</h2><p>It's a good idea to build a language fallback mechanism in case some translations are missing, whether in English or any other preferred language. One way to do it is to configure the fallback mechanism in stored procedures. Unfortunately, it's a lot of work if you have separate entity translation tables since you must build stored procedures for each one of them. Another option is to configure the fallback directly in your application. It'll do the trick but may require additional database calls. Finally, you could keep default translations in entity tables.</p><figure class="post__image post__image--center"><img loading="lazy" src="https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/translation-fallback.webp" alt="Translation fallback in tables." width="600" height="480" sizes="(min-width: 760px) 660px, calc(93.18vw - 30px)" srcset="https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/translation-fallback-xs.webp 320w, https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/translation-fallback-sm.webp 480w, https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/translation-fallback-md.webp 768w, https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/responsive/translation-fallback-xl.webp 1024w"></figure><p>This approach keeps queries small and applications simple and, as a bonus, provides additional context when working with entities directly in the database. While changing the default language might be a bit of work, I wouldn't worry too much since it doesn't happen that often.</p><h2 class="wp-block-heading">Final Words</h2><p>There are numerous aspects to consider when building multilingual applications. Translation storage solutions might differ based on application size, content, rate of change, languages or even some exotic requirements. Sometimes translated resource files work the best. Other times you have to go the multilingual relational database route. To keep it simple, you might denormalize translations as columns or serialize them as JSON. To make it flexible, you could introduce separate entity translation tables or put everything in a shared place. Moreover, there could be cases where you must combine multiple approaches to reach the desired goal. One thing is sure - the more solutions you consider, the better ones you pick.</p><hr><p><em>Thank you for reading. This is my first blog post with hand-drawn pictures. Did you like them? Would you like to see more of them? I'd love to hear your thoughts.</em></p><div class="wp-block-uagb-image aligncenter uagb-block-5d0f3470 wp-block-uagb-image--layout-default wp-block-uagb-image--effect-static wp-block-uagb-image--align-center"> </div><p> </p></div><footer class="content__footer"><div class="content__share"><a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Ftautvydasversockas.github.io%2Fthehonestcoder.%2Fbuilding-multilingual-relational-databases%2F" class="js-share facebook tltp tltp--top" aria-label="Facebook" rel="nofollow noopener noreferrer"><svg><use xlink:href="https://tautvydasversockas.github.io/thehonestcoder./assets/svg/svg-map.svg#facebook"/></svg> <span>Facebook</span> </a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Ftautvydasversockas.github.io%2Fthehonestcoder.%2Fbuilding-multilingual-relational-databases%2F&amp;via=%40TheHonestCoder&amp;text=Building%20Multilingual%20Relational%20Databases%3A%20Approaches%20and%20Tradeoffs" class="js-share twitter tltp tltp--top" aria-label="Twitter" rel="nofollow noopener noreferrer"><svg><use xlink:href="https://tautvydasversockas.github.io/thehonestcoder./assets/svg/svg-map.svg#twitter"/></svg> <span>Twitter</span> </a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Ftautvydasversockas.github.io%2Fthehonestcoder.%2Fbuilding-multilingual-relational-databases%2F" class="js-share linkedin tltp tltp--top" aria-label="Share with LinkedIn" rel="nofollow noopener noreferrer"><svg><use xlink:href="https://tautvydasversockas.github.io/thehonestcoder./assets/svg/svg-map.svg#linkedin"/></svg> <span>LinkedIn</span></a></div></footer></div></article><div class="content__section banner"><div class="main__inner"><script src="https://giscus.app/client.js" data-repo="tautvydasversockas/thehonestcoder-discussions" data-repo-id="R_kgDOL-IysQ" data-category="Announcements" data-category-id="DIC_kwDOL-Iysc4CffdA" data-mapping="pathname" data-strict="1" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="preferred_color_scheme" data-lang="en" data-loading="lazy" crossorigin="anonymous" async></script></div></div></main><div class="right-bar"><div class="right-bar__inner"><div class="sidebar"><section class="box personal-picture"><a href="https://tautvydasversockas.github.io/thehonestcoder.//about" class="personal-picture__image"><img src="https://tautvydasversockas.github.io/thehonestcoder./media/files//cropped-me.webp"></a></section><section class="box buymeacoffee"><a href="https://www.buymeacoffee.com/tautvydasverso" target="_blank"><img align="left" src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="50" width="210" alt="tautvydasverso"></a></section><section class="box tags"><h3 class="box__title">Recommended Topics</h3><ul class="tags__list"><li class="tags__item"><a href="https://tautvydasversockas.github.io/thehonestcoder./tags/net/" class="btn btn--gray">.NET</a></li><li class="tags__item"><a href="https://tautvydasversockas.github.io/thehonestcoder./tags/databases/" class="btn btn--gray">Databases</a></li><li class="tags__item"><a href="https://tautvydasversockas.github.io/thehonestcoder./tags/fun/" class="btn btn--gray">Fun</a></li><li class="tags__item"><a href="https://tautvydasversockas.github.io/thehonestcoder./tags/life/" class="btn btn--gray">Life</a></li><li class="tags__item"><a href="https://tautvydasversockas.github.io/thehonestcoder./tags/system-design/" class="btn btn--gray">System Design</a></li><li class="tags__item"><a href="https://tautvydasversockas.github.io/thehonestcoder./tags/technical-leadership/" class="btn btn--gray">Technical Leadership</a></li></ul></section><div class="box follow"><a href="https://github.com/tautvydasversockas" class="tltp tltp--top" target="_blank" aria-label="GitHub"><svg><use xlink:href="https://tautvydasversockas.github.io/thehonestcoder./assets/svg/svg-map.svg#github"/></svg> </a><a href="https://x.com/TheHonestCoder" class="tltp tltp--top" target="_blank" aria-label="Twitter"><svg><use xlink:href="https://tautvydasversockas.github.io/thehonestcoder./assets/svg/svg-map.svg#twitter"/></svg> </a><a href="https://www.linkedin.com/in/tautvydasversockas/" class="tltp tltp--top" target="_blank" aria-label="LinkedIn"><svg><use xlink:href="https://tautvydasversockas.github.io/thehonestcoder./assets/svg/svg-map.svg#linkedin"/></svg> </a><a href="https://feedly.com/i/subscription/feed%2Fhttps%3A%2F%2Fthehonestcoder.com%2Ffeed%2F" class="tltp tltp--top" target="_blank" aria-label="RSS"><svg><use xlink:href="https://tautvydasversockas.github.io/thehonestcoder./assets/svg/svg-map.svg#rss"/></svg></a></div><div class="box copyright">© 2025 Tautvydas Versockas</div></div></div></div></div><script defer="defer" src="https://tautvydasversockas.github.io/thehonestcoder./assets/js/scripts.min.js?v=b2d91bcadbf5db401b76eb5bb3092eb7"></script><script>var images = document.querySelectorAll('img[loading]');
+        for (var i = 0; i < images.length; i++) {
+            if (images[i].complete) {
+                images[i].classList.add('is-loaded');
+            } else {
+                images[i].addEventListener('load', function () {
+                    this.classList.add('is-loaded');
+                }, false);
+            }
+        }</script><script>'use strict'; document.addEventListener('DOMContentLoaded', function() { var obfElements = document.querySelectorAll('.obfuscated-email'); obfElements.forEach(function(elem) { var dataType = elem.getAttribute('data-type'); var encodedEmail = elem.getAttribute('data-email'); var user = elem.getAttribute('data-user'); var domain = elem.getAttribute('data-domain'); var decodedEmail = ''; if (user && domain) { decodedEmail = user.split('').reverse().join('') + '@' + domain.split('').reverse().join(''); } else if (encodedEmail) { const parts = encodedEmail.split('@'); if (parts.length === 2) { decodedEmail = parts[0].split('').reverse().join('') + '@' + parts[1].split('').reverse().join(''); } else { decodedEmail = encodedEmail; } } if (dataType === 'mailto') { var originalText = elem.textContent.trim(); var a = document.createElement('a'); a.href = 'mailto:' + decodedEmail; if (elem.classList.length > 0) { a.className = elem.className; } if (originalText === '') { a.textContent = decodedEmail; } else { a.textContent = originalText; } elem.parentNode.replaceChild(a, elem); } else if (dataType === 'text') { var textNode = document.createTextNode(decodedEmail); elem.parentNode.replaceChild(textNode, elem); } }); });</script><script type="text/javascript">document.addEventListener("DOMContentLoaded", function() {
+            if (window.location.pathname !== '/') {
+                function calculateReadingTime() {
+                    let totalWords = 0;
+
+                    const textElements = document.querySelectorAll('.content__entry p');
+                    textElements.forEach(element => {
+                        totalWords += element.innerText.split(' ').filter(Boolean).length;
+                    });
+
+                    const headerElements = document.querySelectorAll('.content__entry .wp-block-heading');
+                    headerElements.forEach(element => {
+                        totalWords += element.innerText.split(' ').filter(Boolean).length;
+                    });
+
+                    const codeElements = document.querySelectorAll('.content__entry pre code');
+                    codeElements.forEach(element => {
+                        totalWords += element.innerText.split(' ').filter(Boolean).length;
+                    });
+
+                    const wordsPerMinute = 200;
+                    const readingTimeDecimal = totalWords / wordsPerMinute;
+                    const readingTimeMinutes = Math.floor(readingTimeDecimal);
+                    const fractionalMinute = readingTimeDecimal - readingTimeMinutes;
+                    const readingTimeSeconds = Math.round(fractionalMinute * 60);
+                    const timeString = readingTimeMinutes + (readingTimeSeconds > 29 ? 1 :0);
+                    const finalText = '%s min read'.replace('%s', timeString);
+
+                    const readingTimeElement = document.createElement('div');
+                    readingTimeElement.className = 'reading-time';                
+                    readingTimeElement.textContent = finalText;
+                    const targetElement = document.querySelector('.date-meta-separator');
+                    if (targetElement) {
+                        targetElement.insertAdjacentElement('afterend', readingTimeElement);
+                    }else {
+                        console.error("Reading Time plugin: Error element not found. Locator: '.date-meta-separator'");
+                    }
+                }
+                calculateReadingTime();
+            }            
+        });</script><script defer="defer" src="https://tautvydasversockas.github.io/thehonestcoder./media/plugins/syntaxHighlighter/prism.js"></script><script defer="defer" src="https://tautvydasversockas.github.io/thehonestcoder./media/plugins/syntaxHighlighter/clipboard.min.js"></script><script defer="defer" src="https://tautvydasversockas.github.io/thehonestcoder./media/plugins/syntaxHighlighter/prism-copy-to-clipboard.min.js"></script><div class="pcb" data-behaviour="badge" data-behaviour-link="#cookie-settings" data-revision="1" data-config-ttl="90" data-debug-mode="false"><div role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="pcb-title" aria-describedby="pcb-txt" class="pcb__banner"><div class="pcb__inner"><div id="pcb-title" role="heading" aria-level="2" class="pcb__title">This website uses cookies</div><div id="pcb-txt" class="pcb__txt">We use cookies to enhance your browsing experience and analyze our traffic.</div><div class="pcb__buttons"><button type="button" class="pcb__btn pcb__btn--link pcb__btn--configure" aria-haspopup="dialog">Manage preferences</button> <button type="button" class="pcb__btn pcb__btn--solid pcb__btn--accept">Accept all</button></div></div></div><div class="pcb__popup" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="pcb-popup-title"><div class="pcb__popup__wrapper"><div class="pcb__inner pcb__popup__inner"><div class="pcb__popup__heading"><div id="pcb-popup-title" role="heading" aria-level="2" class="pcb__title">Cookie settings</div><button class="pcb__popup__close" aria-label="Close"></button></div><div class="pcb__popup__content"><div class="pcb__txt pcb__popup__txt">We use cookies to enhance your browsing experience and analyze our traffic. By clicking "Accept All", you consent to our use of cookies.</div><ul class="pcb__groups"><li class="pcb__group"><details><summary class="pcb__group__title no-desc">Required</summary></details><div class="pcb__popup__switch is-checked"><input type="checkbox" data-group-name="" id="pcb-group-0" checked="checked"> <label for="pcb-group-0">Required</label></div></li></ul></div><div class="pcb__buttons pcb__popup__buttons"><button type="button" class="pcb__btn pcb__btn--solid pcb__btn--accept">Accept all</button> <button type="button" class="pcb__btn pcb__btn--reject"></button> <button type="button" class="pcb__btn pcb__btn--save">Save settings</button></div></div></div></div><div class="pcb__overlay" aria-hidden="true"></div><button class="pcb__badge" aria-label="Cookie Policy" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" width="40" height="40" viewBox="0 0 23 23" fill="currentColor"><path d="M21.41 12.71c-.08-.01-.15 0-.22 0h-.03c-.03 0-.05 0-.08.01-.07 0-.13.01-.19.04-.52.21-1.44.19-2.02-.22-.44-.31-.65-.83-.62-1.53a.758.758 0 0 0-.27-.61.73.73 0 0 0-.65-.14c-1.98.51-3.49.23-4.26-.78-.82-1.08-.73-2.89.24-4.49.14-.23.14-.52 0-.75a.756.756 0 0 0-.67-.36c-.64.03-1.11-.1-1.31-.35-.19-.26-.13-.71-.01-1.29.04-.18.06-.38.03-.59-.05-.4-.4-.7-.81-.66C5.1 1.54 1 6.04 1 11.48 1 17.28 5.75 22 11.6 22c5.02 0 9.39-3.54 10.39-8.42.08-.4-.18-.78-.58-.87Zm-9.81 7.82c-5.03 0-9.12-4.06-9.12-9.06 0-4.34 3.05-8 7.25-8.86-.08.7.05 1.33.42 1.81.24.32.66.67 1.38.84-.76 1.86-.65 3.78.36 5.11.61.81 2.03 2 4.95 1.51.18.96.71 1.54 1.18 1.87.62.43 1.38.62 2.1.62.05 0 .09 0 .13-.01-1.23 3.64-4.7 6.18-8.64 6.18ZM13 17c0 .55-.45 1-1 1s-1-.45-1-1 .45-1 1-1 1 .45 1 1Zm5.29-12.3a.99.99 0 0 1-.29-.71c0-.55.45-.99 1-.99a1 1 0 0 1 .71.3c.19.19.29.44.29.71 0 .55-.45.99-1 .99a1 1 0 0 1-.71-.3ZM9 13.5c0 .83-.67 1.5-1.5 1.5S6 14.33 6 13.5 6.67 12 7.5 12s1.5.67 1.5 1.5Zm3.25.81a.744.744 0 0 1-.06-1.05c.28-.32.75-.34 1.05-.06.31.28.33.75.05 1.06-.15.16-.35.25-.56.25-.18 0-.36-.06-.5-.19ZM8.68 7.26c.41.37.44 1 .07 1.41-.2.22-.47.33-.75.33a.96.96 0 0 1-.67-.26c-.41-.37-.44-1-.07-1.41.37-.42 1-.45 1.41-.08Zm11.48 1.88c.18-.19.52-.19.7 0 .05.04.09.1.11.16.03.06.04.12.04.19 0 .13-.05.26-.15.35-.09.1-.22.15-.35.15s-.26-.05-.35-.15a.355.355 0 0 1-.11-.16.433.433 0 0 1-.04-.19c0-.13.05-.26.15-.35Zm-4.93-1.86a.75.75 0 1 1 1.059-1.06.75.75 0 0 1-1.059 1.06Z"/></svg></button></div><script>window.dataLayer = window.dataLayer || [];
+                function gtag() { dataLayer.push(arguments); }
+
+                window.publiiCBGCM = {
+                    defaultState: {"ad_storage":false,"ad_personalization":false,"ad_user_data":false,"analytics_storage":true,"personalization_storage":false,"functionality_storage":false,"security_storage":false},
+                    groups: []
+                };
+            
+            (function(win) {
+    if (!document.querySelector('.pcb')) {
+        return;
+    }
+
+    var cbConfig = {
+        behaviour: document.querySelector('.pcb').getAttribute('data-behaviour'),
+        behaviourLink: document.querySelector('.pcb').getAttribute('data-behaviour-link'),
+        revision: document.querySelector('.pcb').getAttribute('data-revision'),
+        configTTL: parseInt(document.querySelector('.pcb').getAttribute('data-config-ttl'), 10),
+        debugMode: document.querySelector('.pcb').getAttribute('data-debug-mode') === 'true',
+        initialState: null,
+        initialLsState: null,
+        previouslyAccepted: []
+    };
+
+    var cbUI = {
+        wrapper: document.querySelector('.pcb'),
+        banner: {
+            element: null,
+            btnAccept: null,
+            btnReject: null,
+            btnConfigure: null
+        },
+        popup: {
+            element: null,
+            btnClose: null,
+            btnSave: null,
+            btnAccept: null,
+            btnReject: null,
+            checkboxes: null,
+        },
+        overlay: null,
+        badge: null,
+        blockedScripts: document.querySelectorAll('script[type^="gdpr-blocker/"]'),
+        triggerLinks: cbConfig.behaviourLink ? document.querySelectorAll('a[href*="' + cbConfig.behaviourLink + '"]') : null
+    };
+
+    function initUI () {
+        // setup banner elements
+        cbUI.banner.element = cbUI.wrapper.querySelector('.pcb__banner');
+        cbUI.banner.btnAccept = cbUI.banner.element.querySelector('.pcb__btn--accept');
+        cbUI.banner.btnReject = cbUI.banner.element.querySelector('.pcb__btn--reject');
+        cbUI.banner.btnConfigure = cbUI.banner.element.querySelector('.pcb__btn--configure');
+
+        // setup popup elements
+        if (cbUI.wrapper.querySelector('.pcb__popup')) {
+            cbUI.popup.element = cbUI.wrapper.querySelector('.pcb__popup');
+            cbUI.popup.btnClose = cbUI.wrapper.querySelector('.pcb__popup__close');
+            cbUI.popup.btnSave = cbUI.popup.element.querySelector('.pcb__btn--save');
+            cbUI.popup.btnAccept = cbUI.popup.element.querySelector('.pcb__btn--accept');
+            cbUI.popup.btnReject = cbUI.popup.element.querySelector('.pcb__btn--reject');
+            cbUI.popup.checkboxes = cbUI.popup.element.querySelector('input[type="checkbox"]');
+            // setup overlay
+            cbUI.overlay = cbUI.wrapper.querySelector('.pcb__overlay');
+        }
+
+        cbUI.badge = cbUI.wrapper.querySelector('.pcb__badge');
+
+        if (cbConfig.behaviour.indexOf('link') > -1) {
+            for (var i = 0; i < cbUI.triggerLinks.length; i++) {
+                cbUI.triggerLinks[i].addEventListener('click', function(e) {
+                    e.preventDefault();
+                    showBannerOrPopup();
+                });
+            }
+        }
+    }
+
+    function initState () {
+        var lsKeyName = getConfigName();
+        var currentConfig = localStorage.getItem(lsKeyName);
+        var configIsFresh = checkIfConfigIsFresh();
+
+        if (!configIsFresh || currentConfig === null) {
+            if (cbConfig.debugMode) {
+                console.log('🍪 Config not found, or configuration expired');
+            }
+
+            if (window.publiiCBGCM) {
+                gtag('consent', 'default', {
+                    'ad_storage': window.publiiCBGCM.defaultState.ad_storage ? 'granted' : 'denied',
+                    'ad_personalization': window.publiiCBGCM.defaultState.ad_personalization ? 'granted' : 'denied',
+                    'ad_user_data': window.publiiCBGCM.defaultState.ad_user_data ? 'granted' : 'denied',
+                    'analytics_storage': window.publiiCBGCM.defaultState.analytics_storage ? 'granted' : 'denied',
+                    'personalization_storage': window.publiiCBGCM.defaultState.personalization_storage ? 'granted' : 'denied',
+                    'functionality_storage': window.publiiCBGCM.defaultState.functionality_storage ? 'granted' : 'denied',
+                    'security_storage': window.publiiCBGCM.defaultState.security_storage ? 'granted' : 'denied'
+                });  
+                
+                if (cbConfig.debugMode) {
+                    console.log('🍪 GCMv2 DEFAULT STATE: ' + JSON.stringify({
+                        'ad_storage': window.publiiCBGCM.defaultState.ad_storage ? 'granted' : 'denied',
+                        'ad_personalization': window.publiiCBGCM.defaultState.ad_personalization ? 'granted' : 'denied',
+                        'ad_user_data': window.publiiCBGCM.defaultState.ad_user_data ? 'granted' : 'denied',
+                        'analytics_storage': window.publiiCBGCM.defaultState.analytics_storage ? 'granted' : 'denied',
+                        'personalization_storage': window.publiiCBGCM.defaultState.personalization_storage ? 'granted' : 'denied',
+                        'functionality_storage': window.publiiCBGCM.defaultState.functionality_storage ? 'granted' : 'denied',
+                        'security_storage': window.publiiCBGCM.defaultState.security_storage ? 'granted' : 'denied'
+                    }));
+                }
+            }
+
+            showBanner();
+        } else if (typeof currentConfig === 'string') {
+            if (cbConfig.debugMode) {
+                console.log('🍪 Config founded');
+            }
+
+            cbConfig.initialLsState = currentConfig.split(',');
+
+            if (window.publiiCBGCM) {
+                gtag('consent', 'default', {
+                    'ad_storage': getDefaultConsentState(currentConfig, 'ad_storage'),
+                    'ad_personalization': getDefaultConsentState(currentConfig, 'ad_personalization'),
+                    'ad_user_data': getDefaultConsentState(currentConfig, 'ad_user_data'),
+                    'analytics_storage': getDefaultConsentState(currentConfig, 'analytics_storage'),
+                    'personalization_storage': getDefaultConsentState(currentConfig, 'personalization_storage'),
+                    'functionality_storage': getDefaultConsentState(currentConfig, 'functionality_storage'),
+                    'security_storage': getDefaultConsentState(currentConfig, 'security_storage')
+                });
+                
+                if (cbConfig.debugMode) {
+                    console.log('🍪 GCMv2 DEFAULT STATE: ' + JSON.stringify({
+                        'ad_storage': getDefaultConsentState(currentConfig, 'ad_storage'),
+                        'ad_personalization': getDefaultConsentState(currentConfig, 'ad_personalization'),
+                        'ad_user_data': getDefaultConsentState(currentConfig, 'ad_user_data'),
+                        'analytics_storage': getDefaultConsentState(currentConfig, 'analytics_storage'),
+                        'personalization_storage': getDefaultConsentState(currentConfig, 'personalization_storage'),
+                        'functionality_storage': getDefaultConsentState(currentConfig, 'functionality_storage'),
+                        'security_storage': getDefaultConsentState(currentConfig, 'security_storage')
+                    }));
+                }
+            }
+
+            showBadge();
+
+            if (cbUI.popup.element) {
+                var allowedGroups = currentConfig.split(',');
+                var checkedCheckboxes = cbUI.popup.element.querySelectorAll('input[type="checkbox"]:checked');
+
+                for (var j = 0; j < checkedCheckboxes.length; j++) {
+                    var name = checkedCheckboxes[j].getAttribute('data-group-name');
+
+                    if (name && name !== '-' && allowedGroups.indexOf(name) === -1) {
+                        checkedCheckboxes[j].checked = false;
+                    }
+                }
+
+                for (var i = 0; i < allowedGroups.length; i++) {
+                    var checkbox = cbUI.popup.element.querySelector('input[type="checkbox"][data-group-name="' + allowedGroups[i] + '"]');
+
+                    if (checkbox) {
+                        checkbox.checked = true;
+                    }
+
+                    allowCookieGroup(allowedGroups[i]);
+                }
+            }
+        }
+
+        setTimeout(function () {
+            cbConfig.initialState = getInitialStateOfConsents();
+        }, 0);
+    }
+
+    function checkIfConfigIsFresh () {
+        var lastConfigSave = localStorage.getItem('publii-gdpr-cookies-config-save-date');
+
+        if (lastConfigSave === null) {
+            return false;
+        }
+
+        lastConfigSave = parseInt(lastConfigSave, 10);
+
+        if (lastConfigSave === 0) {
+            return true;
+        }
+
+        if (+new Date() - lastConfigSave < cbConfig.configTTL * 24 * 60 * 60 * 1000) {
+            return true;
+        }
+
+        return false;
+    }
+
+    function getDefaultConsentState (currentConfig, consentGroup) {
+        let configGroups = currentConfig.split(',');
+
+        for (let i = 0; i < configGroups.length; i++) {
+            let groupName = configGroups[i];
+            let group = window.publiiCBGCM.groups.find(group => group.cookieGroup === groupName);
+
+            if (group && group[consentGroup]) {
+                return 'granted';
+            }
+        }  
+        
+        if (window.publiiCBGCM.defaultState[consentGroup]) {
+            return 'granted'; 
+        }
+        
+        return 'denied';
+    }
+
+    function initBannerEvents () {
+        cbUI.banner.btnAccept.addEventListener('click', function (e) {
+            e.preventDefault();
+            acceptAllCookies('banner');
+            showBadge();
+        }, false);
+
+        if (cbUI.banner.btnReject) {
+            cbUI.banner.btnReject.addEventListener('click', function (e) {
+                e.preventDefault();
+                rejectAllCookies();
+                showBadge();
+            }, false);
+        }
+
+        if (cbUI.banner.btnConfigure) {
+            cbUI.banner.btnConfigure.addEventListener('click', function (e) {
+                e.preventDefault();
+                hideBanner();
+                showAdvancedPopup();
+                showBadge();
+            }, false);
+        }
+    }
+
+    function initPopupEvents () {
+        if (!cbUI.popup.element) {
+            return;
+        }
+
+        cbUI.overlay.addEventListener('click', function (e) {
+            hideAdvancedPopup();
+        }, false);
+
+        cbUI.popup.element.addEventListener('click', function (e) {
+            e.stopPropagation();
+        }, false);
+
+        cbUI.popup.btnAccept.addEventListener('click', function (e) {
+            e.preventDefault();
+            acceptAllCookies('popup');
+        }, false);
+
+        cbUI.popup.btnReject.addEventListener('click', function (e) {
+            e.preventDefault();
+            rejectAllCookies();
+        }, false);
+
+        cbUI.popup.btnSave.addEventListener('click', function (e) {
+            e.preventDefault();
+            saveConfiguration();
+        }, false);
+
+        cbUI.popup.btnClose.addEventListener('click', function (e) {
+            e.preventDefault();
+            hideAdvancedPopup();
+        }, false);
+    }
+
+    function initBadgeEvents () {
+        if (!cbUI.badge) {
+            return;
+        }
+
+        cbUI.badge.addEventListener('click', function (e) {
+            showBannerOrPopup();
+        }, false);
+    }
+
+    initUI();
+    initState();
+    initBannerEvents();
+    initPopupEvents();
+    initBadgeEvents();
+
+    /**
+     * API
+     */
+    function addScript (src, inline) {
+        var newScript = document.createElement('script');
+
+        if (src) {
+            newScript.setAttribute('src', src);
+        }
+
+        if (inline) {
+            newScript.text = inline;
+        }
+
+        document.body.appendChild(newScript);
+    }
+
+    function allowCookieGroup (allowedGroup) {
+        var scripts = document.querySelectorAll('script[type="gdpr-blocker/' + allowedGroup + '"]');
+        cbConfig.previouslyAccepted.push(allowedGroup);
+    
+        for (var j = 0; j < scripts.length; j++) {
+            addScript(scripts[j].src, scripts[j].text);
+        }
+
+        var groupEvent = new Event('publii-cookie-banner-unblock-' + allowedGroup);
+        document.body.dispatchEvent(groupEvent);
+        unlockEmbeds(allowedGroup);
+
+        if (cbConfig.debugMode) {
+            console.log('🍪 Allowed group: ' + allowedGroup);
+        }
+
+        if (window.publiiCBGCM && cbConfig.initialLsState.indexOf(allowedGroup) === -1) {
+            let consentResult = {};
+            let group = window.publiiCBGCM.groups.find(group => group.cookieGroup === allowedGroup);
+
+            if (group) {
+                let foundSomeConsents = false;
+
+                Object.keys(group).forEach(key => {
+                    if (key !== 'cookieGroup' && group[key] === true) {
+                        consentResult[key] = 'granted';
+                        foundSomeConsents = true;
+                    }
+                });
+
+                if (foundSomeConsents) {
+                    gtag('consent', 'update', consentResult);   
+
+                    if (cbConfig.debugMode) {
+                        console.log('🍪 GCMv2 UPDATE: ' + JSON.stringify(consentResult));
+                    }
+                }
+            }
+        }
+    }
+
+    function showBannerOrPopup () {
+        if (cbUI.popup.element) {
+            showAdvancedPopup();
+        } else {
+            showBanner();
+        }
+    }
+
+    function showAdvancedPopup () {
+        cbUI.popup.element.classList.add('is-visible');
+        cbUI.overlay.classList.add('is-visible');
+        cbUI.popup.element.setAttribute('aria-hidden', 'false');
+        cbUI.overlay.setAttribute('aria-hidden', 'false');
+    }
+
+    function hideAdvancedPopup () {
+        cbUI.popup.element.classList.remove('is-visible');
+        cbUI.overlay.classList.remove('is-visible');
+        cbUI.popup.element.setAttribute('aria-hidden', 'true');
+        cbUI.overlay.setAttribute('aria-hidden', 'true');
+    }
+
+    function showBanner () {
+        cbUI.banner.element.classList.add('is-visible');
+        cbUI.banner.element.setAttribute('aria-hidden', 'false');
+    }
+
+    function hideBanner () {
+        cbUI.banner.element.classList.remove('is-visible');
+        cbUI.banner.element.setAttribute('aria-hidden', 'true');
+    }
+
+    function showBadge () {
+        if (!cbUI.badge) {
+            return;
+        }
+
+        cbUI.badge.classList.add('is-visible');
+        cbUI.badge.setAttribute('aria-hidden', 'false');
+    }
+
+    function getConfigName () {
+        var lsKeyName = 'publii-gdpr-allowed-cookies';
+
+        if (cbConfig.revision) {
+            lsKeyName = lsKeyName + '-v' + parseInt(cbConfig.revision, 10);
+        }
+
+        return lsKeyName;
+    }
+
+    function storeConfiguration (allowedGroups) {
+        var lsKeyName = getConfigName();
+        var dataToStore = allowedGroups.join(',');
+        localStorage.setItem(lsKeyName, dataToStore);
+
+        if (cbConfig.configTTL === 0) {
+            localStorage.setItem('publii-gdpr-cookies-config-save-date', 0);
+
+            if (cbConfig.debugMode) {
+                console.log('🍪 Store never expiring configuration');
+            }
+        } else {
+            localStorage.setItem('publii-gdpr-cookies-config-save-date', +new Date());
+        }
+    }
+
+    function getInitialStateOfConsents () {
+        if (!cbUI.popup.element) {
+            return [];
+        }
+
+        var checkedGroups = cbUI.popup.element.querySelectorAll('input[type="checkbox"]:checked');
+        var groups = [];
+
+        for (var i = 0; i < checkedGroups.length; i++) {
+            var allowedGroup = checkedGroups[i].getAttribute('data-group-name');
+
+            if (allowedGroup !== '') {
+                groups.push(allowedGroup);
+            }
+        }
+
+        if (cbConfig.debugMode) {
+            console.log('🍪 Initial state: ' + groups.join(', '));
+        }
+
+        return groups;
+    }
+
+    function getCurrentStateOfConsents () {
+        if (!cbUI.popup.element) {
+            return [];
+        }
+
+        var checkedGroups = cbUI.popup.element.querySelectorAll('input[type="checkbox"]:checked');
+        var groups = [];
+
+        for (var i = 0; i < checkedGroups.length; i++) {
+            var allowedGroup = checkedGroups[i].getAttribute('data-group-name');
+
+            if (allowedGroup !== '') {
+                groups.push(allowedGroup);
+            }
+        }
+
+        if (cbConfig.debugMode) {
+            console.log('🍪 State to save: ' + groups.join(', '));
+        }
+
+        return groups;
+    }
+
+    function getAllGroups () {
+        if (!cbUI.popup.element) {
+            return [];
+        }
+
+        var checkedGroups = cbUI.popup.element.querySelectorAll('input[type="checkbox"]');
+        var groups = [];
+
+        for (var i = 0; i < checkedGroups.length; i++) {
+            var allowedGroup = checkedGroups[i].getAttribute('data-group-name');
+
+            if (allowedGroup !== '') {
+                groups.push(allowedGroup);
+            }
+        }
+
+        return groups;
+    }
+
+    function acceptAllCookies (source) {
+        var groupsToAccept = getAllGroups();
+        storeConfiguration(groupsToAccept);
+
+        for (var i = 0; i < groupsToAccept.length; i++) {
+            var group = groupsToAccept[i];
+
+            if (cbConfig.initialState.indexOf(group) > -1 || cbConfig.previouslyAccepted.indexOf(group) > -1) {
+                if (cbConfig.debugMode) {
+                    console.log('🍪 Skip previously activated group: ' + group);
+                }
+
+                continue;
+            }
+
+            allowCookieGroup(group);
+        }
+
+        if (cbUI.popup.element) {
+            var checkboxesToCheck = cbUI.popup.element.querySelectorAll('input[type="checkbox"]');
+
+            for (var j = 0; j < checkboxesToCheck.length; j++) {
+                checkboxesToCheck[j].checked = true;
+            }
+        }
+
+        if (cbConfig.debugMode) {
+            console.log('🍪 Accept all cookies: ', groupsToAccept.join(', '));
+        }
+
+        if (source === 'popup') {
+            hideAdvancedPopup();
+        } else if (source === 'banner') {
+            hideBanner();
+        }
+    }
+
+    function rejectAllCookies () {
+        if (cbConfig.debugMode) {
+            console.log('🍪 Reject all cookies');
+        }
+
+        storeConfiguration([]);
+        setTimeout(function () {
+            window.location.reload();
+        }, 100);
+    }
+
+    function saveConfiguration () {
+        var groupsToAccept = getCurrentStateOfConsents();
+        storeConfiguration(groupsToAccept);
+
+        if (cbConfig.debugMode) {
+            console.log('🍪 Save new config: ', groupsToAccept.join(', '));
+        }
+
+        if (reloadIsNeeded(groupsToAccept)) {
+            setTimeout(function () {
+                window.location.reload();
+            }, 100);
+            return;
+        }
+
+        for (var i = 0; i < groupsToAccept.length; i++) {
+            var group = groupsToAccept[i];
+
+            if (cbConfig.initialState.indexOf(group) > -1 || cbConfig.previouslyAccepted.indexOf(group) > -1) {
+                if (cbConfig.debugMode) {
+                    console.log('🍪 Skip previously activated group: ' + group);
+                }
+
+                continue;
+            }
+
+            allowCookieGroup(group);
+        }
+
+        hideAdvancedPopup();
+    }
+
+    function reloadIsNeeded (groupsToAccept) {
+        // check if user rejected consent for initial groups
+        var initialGroups = cbConfig.initialState;
+        var previouslyAcceptedGroups = cbConfig.previouslyAccepted;
+        var groupsToCheck = initialGroups.concat(previouslyAcceptedGroups);
+
+        for (var i = 0; i < groupsToCheck.length; i++) {
+            var groupToCheck = groupsToCheck[i];
+
+            if (groupToCheck !== '' && groupsToAccept.indexOf(groupToCheck) === -1) {
+                if (cbConfig.debugMode) {
+                    console.log('🍪 Reload is needed due lack of: ', groupToCheck);
+                }
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    function unlockEmbeds (cookieGroup) {
+        var iframesToUnlock = document.querySelectorAll('.pec-wrapper[data-consent-group-id="' + cookieGroup + '"]');
+
+        for (var i = 0; i < iframesToUnlock.length; i++) {
+            var iframeWrapper = iframesToUnlock[i];
+            iframeWrapper.querySelector('.pec-overlay').classList.remove('is-active');
+            iframeWrapper.querySelector('.pec-overlay').setAttribute('aria-hidden', 'true');
+            var iframe = iframeWrapper.querySelector('iframe');
+            iframe.setAttribute('src', iframe.getAttribute('data-consent-src'));
+        }
+    }
+
+    win.publiiEmbedConsentGiven = function (cookieGroup) {
+        // it will unlock embeds
+        allowCookieGroup(cookieGroup);
+
+        var checkbox = cbUI.popup.element.querySelector('input[type="checkbox"][data-group-name="' + cookieGroup + '"]');
+
+        if (checkbox) {
+            checkbox.checked = true;
+        }
+
+        var groupsToAccept = getCurrentStateOfConsents();
+        storeConfiguration(groupsToAccept);
+
+        if (cbConfig.debugMode) {
+            console.log('🍪 Save new config: ', groupsToAccept.join(', '));
+        }
+    }
+})(window);</script></body></html>

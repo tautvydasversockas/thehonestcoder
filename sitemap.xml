@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="https://tautvydasversockas.github.io/thehonestcoder./sitemap.xsl"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+<url>
+<loc>https://tautvydasversockas.github.io/thehonestcoder./</loc>
+</url>
+<url>
+<loc>https://tautvydasversockas.github.io/thehonestcoder./6-best-ways-to-scale-your-systems/</loc>
+<lastmod>2025-01-12T00:12:14+02:00</lastmod>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/11/scaling-featured.webp</image:loc>
+<image:title><![CDATA[Scaling services.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/11/monolith-vs-microservices.webp</image:loc>
+<image:title><![CDATA[Monolith vs. Microservices]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/11/horizontal-scaling-vs-vertical-scaling.webp</image:loc>
+<image:title><![CDATA[Horizontal vs. Vertical Scaling]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/11/cqrs-with-two-databases.webp</image:loc>
+<image:title><![CDATA[CQRS]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/11/database-shards.webp</image:loc>
+<image:title><![CDATA[Database Sharding]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/11/cache.webp</image:loc>
+<image:title><![CDATA[Memory Cache.]]></image:title>
+</image:image>
+</url>
+<url>
+<loc>https://tautvydasversockas.github.io/thehonestcoder./7-message-metadata-patterns/</loc>
+<lastmod>2025-01-12T18:32:08+02:00</lastmod>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/7/messaging-patterns-featured.webp</image:loc>
+<image:title><![CDATA[Reply address pattern.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/7/message-id.webp</image:loc>
+<image:title><![CDATA[Message ID.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/7/message-causation-id.webp</image:loc>
+<image:title><![CDATA[Message causation ID.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/7/message-correlation-id.webp</image:loc>
+<image:title><![CDATA[Message correlation ID.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/7/message-reply-address.webp</image:loc>
+<image:title><![CDATA[Message reply address.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/7/message-schema-version.webp</image:loc>
+<image:title><![CDATA[Message schema version.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/7/message-sequence.webp</image:loc>
+<image:title><![CDATA[Message sequence.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/7/message-expiration.webp</image:loc>
+<image:title><![CDATA[Message expiration.]]></image:title>
+</image:image>
+</url>
+<url>
+<loc>https://tautvydasversockas.github.io/thehonestcoder./about/</loc>
+<lastmod>2025-01-12T22:02:54+02:00</lastmod>
+</url>
+<url>
+<loc>https://tautvydasversockas.github.io/thehonestcoder./building-multilingual-relational-databases/</loc>
+<lastmod>2025-01-12T18:26:57+02:00</lastmod>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/one-table-to-rule-them-all-featured.webp</image:loc>
+<image:title><![CDATA[One table to rule them all - Lord of The Rings.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/denormalized-translations-table.webp</image:loc>
+<image:title><![CDATA[Denormalized translations table.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/proposing-solution.webp</image:loc>
+<image:title><![CDATA[Proposing a solution.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/json-serialized-translations-table.webp</image:loc>
+<image:title><![CDATA[JSON translations table.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/json-translations.webp</image:loc>
+<image:title><![CDATA[I said Jason, not JSON.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/shared-translation-table.webp</image:loc>
+<image:title><![CDATA[Shared translations table.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/one-table-to-rule-them-all-featured-2.webp</image:loc>
+<image:title><![CDATA[One table to rule them all - Lord of The Rings.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/entity-translations-table.webp</image:loc>
+<image:title><![CDATA[Entity translations table.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/generic-translations-table-2.webp</image:loc>
+<image:title><![CDATA[Generic translations table.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/langauges-table.webp</image:loc>
+<image:title><![CDATA[Languages table.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/translation-fallback.webp</image:loc>
+<image:title><![CDATA[Translation fallback in tables.]]></image:title>
+</image:image>
+</url>
+<url>
+<loc>https://tautvydasversockas.github.io/thehonestcoder./choosing-the-right-database/</loc>
+<lastmod>2025-01-12T18:20:20+02:00</lastmod>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/12/databases-featured.webp</image:loc>
+<image:title><![CDATA[A database with a crown.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/12/cap.webp</image:loc>
+<image:title><![CDATA[CAP]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/12/sql-customers.webp</image:loc>
+<image:title><![CDATA[SQL table example.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/12/database-key-value.webp</image:loc>
+<image:title><![CDATA[Key-value database example.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/12/database-document.webp</image:loc>
+<image:title><![CDATA[Document database example.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/12/database-wide-column.webp</image:loc>
+<image:title><![CDATA[Wide-column database example.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/12/database-graph.webp</image:loc>
+<image:title><![CDATA[Graph database example.]]></image:title>
+</image:image>
+</url>
+<url>
+<loc>https://tautvydasversockas.github.io/thehonestcoder./ddd-ef-core-8/</loc>
+<lastmod>2025-01-12T00:11:21+02:00</lastmod>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/6/ddd-ef-core-featured.webp</image:loc>
+<image:title><![CDATA[Spider-Man reading "Domain-Driven Design: Tackling Complexity in Heart of Software" by Eric Evans.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/6/ef-core-8-optional-complex-types.png</image:loc>
+<image:title><![CDATA[EF Core library maintainer discussing optional complex types in EF Core 8.]]></image:title>
+</image:image>
+</url>
+<url>
+<loc>https://tautvydasversockas.github.io/thehonestcoder./once-upon-a-time-on-valentines-day/</loc>
+<lastmod>2025-01-11T23:59:21+02:00</lastmod>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/13/heart-featured.webp</image:loc>
+<image:title><![CDATA[A heart.]]></image:title>
+</image:image>
+</url>
+<url>
+<loc>https://tautvydasversockas.github.io/thehonestcoder./page/2/</loc>
+</url>
+<url>
+<loc>https://tautvydasversockas.github.io/thehonestcoder./playlist-for-the-big-release/</loc>
+<lastmod>2025-01-12T00:12:04+02:00</lastmod>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/10/mixtape-featured.webp</image:loc>
+<image:title><![CDATA[Release mixtape.]]></image:title>
+</image:image>
+</url>
+<url>
+<loc>https://tautvydasversockas.github.io/thehonestcoder./redpanda-a-new-cool-kid-on-the-event-streaming-block/</loc>
+<lastmod>2025-01-12T00:09:50+02:00</lastmod>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/16/redpanda-featured.webp</image:loc>
+<image:title><![CDATA[Redpanda logo.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/16/redpanda-console.webp</image:loc>
+<image:title><![CDATA[Redpanda console.]]></image:title>
+</image:image>
+</url>
+<url>
+<loc>https://tautvydasversockas.github.io/thehonestcoder./retry-requests-fearlessly-with-idempotence/</loc>
+<lastmod>2025-01-12T00:11:36+02:00</lastmod>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/8/retry-requests-featured.webp</image:loc>
+<image:title><![CDATA[Faking Exactly-Once Delivery with Idempotence book.]]></image:title>
+</image:image>
+</url>
+<url>
+<loc>https://tautvydasversockas.github.io/thehonestcoder./sabotage-your-company/</loc>
+<lastmod>2025-01-12T00:11:08+02:00</lastmod>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/5/sabotage-company-featured-2.webp</image:loc>
+<image:title><![CDATA[A raccoon planning something suspicious.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/5/clowns-meeting.webp</image:loc>
+<image:title><![CDATA[Clowns having a meeting.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/5/wizard-creating-10x-developer.webp</image:loc>
+<image:title><![CDATA[A wizard creating a 10X developer mix.]]></image:title>
+</image:image>
+</url>
+<url>
+<loc>https://tautvydasversockas.github.io/thehonestcoder./sending-large-files-in-message-driven-systems/</loc>
+<lastmod>2025-01-12T10:56:04+02:00</lastmod>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/19/large-files-featured.webp</image:loc>
+<image:title><![CDATA[A person trying to fit a box into a messaging queue.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/19/claim-check.webp</image:loc>
+<image:title><![CDATA[File store and a &quot;Claim Check&quot; pattern]]></image:title>
+</image:image>
+</url>
+<url>
+<loc>https://tautvydasversockas.github.io/thehonestcoder./service-leader-election-with-net-and-apache-zookeeper/</loc>
+<lastmod>2025-01-12T00:10:58+02:00</lastmod>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/15/zookeeper-featured.webp</image:loc>
+<image:title><![CDATA[Apache ZooKeeper logo.]]></image:title>
+</image:image>
+</url>
+<url>
+<loc>https://tautvydasversockas.github.io/thehonestcoder./speaking/</loc>
+<lastmod>2025-01-12T18:43:37+02:00</lastmod>
+</url>
+<url>
+<loc>https://tautvydasversockas.github.io/thehonestcoder./the-promised-land-of-event-sourcing/</loc>
+<lastmod>2025-01-12T18:07:45+02:00</lastmod>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/9/event-sourcing-featured.webp</image:loc>
+<image:title><![CDATA[Account events.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/9/event-store-1.webp</image:loc>
+<image:title><![CDATA[Account events stream in Event Store.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/9/event-store-2.webp</image:loc>
+<image:title><![CDATA[DepositedToAccount event in Event Store.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/9/one-sock-two-feet.webp</image:loc>
+<image:title><![CDATA[One sock.]]></image:title>
+</image:image>
+</url>
+<url>
+<loc>https://tautvydasversockas.github.io/thehonestcoder./top-10-audiobooks-to-listen-to-as-a-software-engineer/</loc>
+<lastmod>2025-01-12T18:04:10+02:00</lastmod>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/14/audiobooks-featured.webp</image:loc>
+<image:title><![CDATA[A software engineer with headphones on working on a laptop.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/14/the-phoenix-project.webp</image:loc>
+<image:title><![CDATA[The phoenix project]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/14/the-unicorn-project.webp</image:loc>
+<image:title><![CDATA[The Unicorn Project]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/14/the-healthy-programmer.webp</image:loc>
+<image:title><![CDATA[The Healthy Programmer]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/14/soft-skills.webp</image:loc>
+<image:title><![CDATA[Soft Skills]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/14/no-rules-rules.jpg</image:loc>
+<image:title><![CDATA[No Rules Rules]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/14/how-to-win-friends.jpg</image:loc>
+<image:title><![CDATA[How to Win Friends &amp; Influence People]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/14/algorithms-to-live-by-2.webp</image:loc>
+<image:title><![CDATA[Algorithms to Live By]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/14/how-the-stock-market-works.webp</image:loc>
+<image:title><![CDATA[How the Stock Market Works]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/14/bad-blood.webp</image:loc>
+<image:title><![CDATA[Bad Blood]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/14/dark-pools.webp</image:loc>
+<image:title><![CDATA[Dark Pools]]></image:title>
+</image:image>
+</url>
+<url>
+<loc>https://tautvydasversockas.github.io/thehonestcoder./types-of-messages-in-message-driven-systems/</loc>
+<lastmod>2025-01-12T18:29:48+02:00</lastmod>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/17/message-types-featured.webp</image:loc>
+<image:title><![CDATA[Message types.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/17/message-event.webp</image:loc>
+<image:title><![CDATA[Publishing events.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/17/reject-event-einstein.webp</image:loc>
+<image:title><![CDATA[Albert Einstein time travelling to reject an event.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/17/message-command.webp</image:loc>
+<image:title><![CDATA[Sending commands.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/17/message-query.webp</image:loc>
+<image:title><![CDATA[Sending queries.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://tautvydasversockas.github.io/thehonestcoder./media/posts/17/message-document-2.webp</image:loc>
+<image:title><![CDATA[Publishing documents.]]></image:title>
+</image:image>
+</url>
+</urlset>

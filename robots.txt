@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://tautvydasversockas.github.io/thehonestcoder./sitemap.xml
