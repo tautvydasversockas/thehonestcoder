@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/">
     <title>The Honest Coder</title>
-    <link href="https://tautvydasversockas.github.io/thehonestcoder./feed.xml" rel="self" />
-    <link href="https://tautvydasversockas.github.io/thehonestcoder." />
+    <link href="https://tautvydasversockas.github.io/thehonestcoder/feed.xml" rel="self" />
+    <link href="https://tautvydasversockas.github.io/thehonestcoder" />
     <updated>2025-01-12T18:32:08+02:00</updated>
     <author>
         <name>Tautvydas Versockas</name>
     </author>
-    <id>https://tautvydasversockas.github.io/thehonestcoder.</id>
+    <id>https://tautvydasversockas.github.io/thehonestcoder</id>
 
     <entry>
         <title>How to Sabotage Your Software Company in 10 Easy Steps (Without Getting Caught)</title>
         <author>
             <name>Tautvydas Versockas</name>
         </author>
-        <link href="https://tautvydasversockas.github.io/thehonestcoder./sabotage-your-company/"/>
-        <id>https://tautvydasversockas.github.io/thehonestcoder./sabotage-your-company/</id>
-        <media:content url="https://tautvydasversockas.github.io/thehonestcoder./media/posts/5/sabotage-company-featured-2.webp" medium="image" />
+        <link href="https://tautvydasversockas.github.io/thehonestcoder/sabotage-your-company/"/>
+        <id>https://tautvydasversockas.github.io/thehonestcoder/sabotage-your-company/</id>
+        <media:content url="https://tautvydasversockas.github.io/thehonestcoder/media/posts/5/sabotage-company-featured-2.webp" medium="image" />
             <category term="Technical Leadership"/>
 
         <updated>2025-01-05T12:00:00+02:00</updated>
             <summary>
                 <![CDATA[
-                        <img src="https://tautvydasversockas.github.io/thehonestcoder./media/posts/5/sabotage-company-featured-2.webp" alt="A raccoon planning something suspicious." />
+                        <img src="https://tautvydasversockas.github.io/thehonestcoder/media/posts/5/sabotage-company-featured-2.webp" alt="A raccoon planning something suspicious." />
                     <p>From creating chaos with endless meetings to enforcing inefficient processes, learn the art of subtle sabotage!</p>
 
                 ]]>
@@ -34,9 +34,9 @@
         <author>
             <name>Tautvydas Versockas</name>
         </author>
-        <link href="https://tautvydasversockas.github.io/thehonestcoder./ddd-ef-core-8/"/>
-        <id>https://tautvydasversockas.github.io/thehonestcoder./ddd-ef-core-8/</id>
-        <media:content url="https://tautvydasversockas.github.io/thehonestcoder./media/posts/6/ddd-ef-core-featured.webp" medium="image" />
+        <link href="https://tautvydasversockas.github.io/thehonestcoder/ddd-ef-core-8/"/>
+        <id>https://tautvydasversockas.github.io/thehonestcoder/ddd-ef-core-8/</id>
+        <media:content url="https://tautvydasversockas.github.io/thehonestcoder/media/posts/6/ddd-ef-core-featured.webp" medium="image" />
             <category term="System Design"/>
             <category term="Databases"/>
             <category term=".NET"/>
@@ -44,7 +44,7 @@
         <updated>2023-12-17T12:00:00+02:00</updated>
             <summary>
                 <![CDATA[
-                        <img src="https://tautvydasversockas.github.io/thehonestcoder./media/posts/6/ddd-ef-core-featured.webp" alt="Spider-Man reading &quot;Domain-Driven Design: Tackling Complexity in Heart of Software&quot; by Eric Evans." />
+                        <img src="https://tautvydasversockas.github.io/thehonestcoder/media/posts/6/ddd-ef-core-featured.webp" alt="Spider-Man reading &quot;Domain-Driven Design: Tackling Complexity in Heart of Software&quot; by Eric Evans." />
                     <p>Learn to implement Domain-Driven Design patterns using Entity Framework Core 8!</p>
 
                 ]]>
@@ -56,15 +56,15 @@
         <author>
             <name>Tautvydas Versockas</name>
         </author>
-        <link href="https://tautvydasversockas.github.io/thehonestcoder./7-message-metadata-patterns/"/>
-        <id>https://tautvydasversockas.github.io/thehonestcoder./7-message-metadata-patterns/</id>
-        <media:content url="https://tautvydasversockas.github.io/thehonestcoder./media/posts/7/messaging-patterns-featured.webp" medium="image" />
+        <link href="https://tautvydasversockas.github.io/thehonestcoder/7-message-metadata-patterns/"/>
+        <id>https://tautvydasversockas.github.io/thehonestcoder/7-message-metadata-patterns/</id>
+        <media:content url="https://tautvydasversockas.github.io/thehonestcoder/media/posts/7/messaging-patterns-featured.webp" medium="image" />
             <category term="System Design"/>
 
         <updated>2023-08-15T12:00:00+03:00</updated>
             <summary>
                 <![CDATA[
-                        <img src="https://tautvydasversockas.github.io/thehonestcoder./media/posts/7/messaging-patterns-featured.webp" alt="Reply address pattern." />
+                        <img src="https://tautvydasversockas.github.io/thehonestcoder/media/posts/7/messaging-patterns-featured.webp" alt="Reply address pattern." />
                     <p>Every developer working with message-driven systems should know these seven message metadata patterns.</p>
 
                 ]]>
@@ -76,15 +76,15 @@
         <author>
             <name>Tautvydas Versockas</name>
         </author>
-        <link href="https://tautvydasversockas.github.io/thehonestcoder./sending-large-files-in-message-driven-systems/"/>
-        <id>https://tautvydasversockas.github.io/thehonestcoder./sending-large-files-in-message-driven-systems/</id>
-        <media:content url="https://tautvydasversockas.github.io/thehonestcoder./media/posts/19/large-files-featured.webp" medium="image" />
+        <link href="https://tautvydasversockas.github.io/thehonestcoder/sending-large-files-in-message-driven-systems/"/>
+        <id>https://tautvydasversockas.github.io/thehonestcoder/sending-large-files-in-message-driven-systems/</id>
+        <media:content url="https://tautvydasversockas.github.io/thehonestcoder/media/posts/19/large-files-featured.webp" medium="image" />
             <category term="System Design"/>
 
         <updated>2023-01-15T12:00:00+02:00</updated>
             <summary>
                 <![CDATA[
-                        <img src="https://tautvydasversockas.github.io/thehonestcoder./media/posts/19/large-files-featured.webp" alt="A person trying to fit a box into a messaging queue." />
+                        <img src="https://tautvydasversockas.github.io/thehonestcoder/media/posts/19/large-files-featured.webp" alt="A person trying to fit a box into a messaging queue." />
                     <p>How to share large files when building message-driven systems dealing with image recognition, video processing, or big data analysis.</p>
 
                 ]]>
@@ -96,15 +96,15 @@
         <author>
             <name>Tautvydas Versockas</name>
         </author>
-        <link href="https://tautvydasversockas.github.io/thehonestcoder./types-of-messages-in-message-driven-systems/"/>
-        <id>https://tautvydasversockas.github.io/thehonestcoder./types-of-messages-in-message-driven-systems/</id>
-        <media:content url="https://tautvydasversockas.github.io/thehonestcoder./media/posts/17/message-types-featured.webp" medium="image" />
+        <link href="https://tautvydasversockas.github.io/thehonestcoder/types-of-messages-in-message-driven-systems/"/>
+        <id>https://tautvydasversockas.github.io/thehonestcoder/types-of-messages-in-message-driven-systems/</id>
+        <media:content url="https://tautvydasversockas.github.io/thehonestcoder/media/posts/17/message-types-featured.webp" medium="image" />
             <category term="System Design"/>
 
         <updated>2022-10-04T00:00:00+03:00</updated>
             <summary>
                 <![CDATA[
-                        <img src="https://tautvydasversockas.github.io/thehonestcoder./media/posts/17/message-types-featured.webp" alt="Message types." />
+                        <img src="https://tautvydasversockas.github.io/thehonestcoder/media/posts/17/message-types-featured.webp" alt="Message types." />
                     <p>Abusing message types in message-driven systems may result in bloated messages, unclear intent, or impossible-to-understand data flows.</p>
 
                 ]]>
@@ -116,16 +116,16 @@
         <author>
             <name>Tautvydas Versockas</name>
         </author>
-        <link href="https://tautvydasversockas.github.io/thehonestcoder./building-multilingual-relational-databases/"/>
-        <id>https://tautvydasversockas.github.io/thehonestcoder./building-multilingual-relational-databases/</id>
-        <media:content url="https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/one-table-to-rule-them-all-featured.webp" medium="image" />
+        <link href="https://tautvydasversockas.github.io/thehonestcoder/building-multilingual-relational-databases/"/>
+        <id>https://tautvydasversockas.github.io/thehonestcoder/building-multilingual-relational-databases/</id>
+        <media:content url="https://tautvydasversockas.github.io/thehonestcoder/media/posts/18/one-table-to-rule-them-all-featured.webp" medium="image" />
             <category term="System Design"/>
             <category term="Databases"/>
 
         <updated>2022-09-20T00:00:00+03:00</updated>
             <summary>
                 <![CDATA[
-                        <img src="https://tautvydasversockas.github.io/thehonestcoder./media/posts/18/one-table-to-rule-them-all-featured.webp" alt="One table to rule them all - Lord of The Rings." />
+                        <img src="https://tautvydasversockas.github.io/thehonestcoder/media/posts/18/one-table-to-rule-them-all-featured.webp" alt="One table to rule them all - Lord of The Rings." />
                     <p>Learn to design and build multilingual software applications for global audiences.</p>
 
                 ]]>
@@ -137,15 +137,15 @@
         <author>
             <name>Tautvydas Versockas</name>
         </author>
-        <link href="https://tautvydasversockas.github.io/thehonestcoder./redpanda-a-new-cool-kid-on-the-event-streaming-block/"/>
-        <id>https://tautvydasversockas.github.io/thehonestcoder./redpanda-a-new-cool-kid-on-the-event-streaming-block/</id>
-        <media:content url="https://tautvydasversockas.github.io/thehonestcoder./media/posts/16/redpanda-featured.webp" medium="image" />
+        <link href="https://tautvydasversockas.github.io/thehonestcoder/redpanda-a-new-cool-kid-on-the-event-streaming-block/"/>
+        <id>https://tautvydasversockas.github.io/thehonestcoder/redpanda-a-new-cool-kid-on-the-event-streaming-block/</id>
+        <media:content url="https://tautvydasversockas.github.io/thehonestcoder/media/posts/16/redpanda-featured.webp" medium="image" />
             <category term="System Design"/>
 
         <updated>2022-02-20T12:00:00+02:00</updated>
             <summary>
                 <![CDATA[
-                        <img src="https://tautvydasversockas.github.io/thehonestcoder./media/posts/16/redpanda-featured.webp" alt="Redpanda logo." />
+                        <img src="https://tautvydasversockas.github.io/thehonestcoder/media/posts/16/redpanda-featured.webp" alt="Redpanda logo." />
                     <p>Redpanda - ZooKeeper-free, JVM-free, Kafka compatible, and up to 10 times faster than Kafka. What's not to like!</p>
 
                 ]]>
@@ -157,15 +157,15 @@
         <author>
             <name>Tautvydas Versockas</name>
         </author>
-        <link href="https://tautvydasversockas.github.io/thehonestcoder./service-leader-election-with-net-and-apache-zookeeper/"/>
-        <id>https://tautvydasversockas.github.io/thehonestcoder./service-leader-election-with-net-and-apache-zookeeper/</id>
-        <media:content url="https://tautvydasversockas.github.io/thehonestcoder./media/posts/15/zookeeper-featured.webp" medium="image" />
+        <link href="https://tautvydasversockas.github.io/thehonestcoder/service-leader-election-with-net-and-apache-zookeeper/"/>
+        <id>https://tautvydasversockas.github.io/thehonestcoder/service-leader-election-with-net-and-apache-zookeeper/</id>
+        <media:content url="https://tautvydasversockas.github.io/thehonestcoder/media/posts/15/zookeeper-featured.webp" medium="image" />
             <category term="System Design"/>
 
         <updated>2021-07-14T12:00:00+03:00</updated>
             <summary>
                 <![CDATA[
-                        <img src="https://tautvydasversockas.github.io/thehonestcoder./media/posts/15/zookeeper-featured.webp" alt="Apache ZooKeeper logo." />
+                        <img src="https://tautvydasversockas.github.io/thehonestcoder/media/posts/15/zookeeper-featured.webp" alt="Apache ZooKeeper logo." />
                     <p>Building reliable distributed software solutions is not an easy task. However, it gets slightly easier using Apache ZooKeeper.</p>
 
                 ]]>
@@ -177,15 +177,15 @@
         <author>
             <name>Tautvydas Versockas</name>
         </author>
-        <link href="https://tautvydasversockas.github.io/thehonestcoder./top-10-audiobooks-to-listen-to-as-a-software-engineer/"/>
-        <id>https://tautvydasversockas.github.io/thehonestcoder./top-10-audiobooks-to-listen-to-as-a-software-engineer/</id>
-        <media:content url="https://tautvydasversockas.github.io/thehonestcoder./media/posts/14/audiobooks-featured.webp" medium="image" />
+        <link href="https://tautvydasversockas.github.io/thehonestcoder/top-10-audiobooks-to-listen-to-as-a-software-engineer/"/>
+        <id>https://tautvydasversockas.github.io/thehonestcoder/top-10-audiobooks-to-listen-to-as-a-software-engineer/</id>
+        <media:content url="https://tautvydasversockas.github.io/thehonestcoder/media/posts/14/audiobooks-featured.webp" medium="image" />
             <category term="Life"/>
 
         <updated>2021-04-14T12:00:00+03:00</updated>
             <summary>
                 <![CDATA[
-                        <img src="https://tautvydasversockas.github.io/thehonestcoder./media/posts/14/audiobooks-featured.webp" alt="A software engineer with headphones on working on a laptop." />
+                        <img src="https://tautvydasversockas.github.io/thehonestcoder/media/posts/14/audiobooks-featured.webp" alt="A software engineer with headphones on working on a laptop." />
                     <p>There's only so much a busy software engineer can do in a day. Audiobooks and podcasts are a great way of making the best out of those few precious hours!</p>
 
                 ]]>
@@ -197,15 +197,15 @@
         <author>
             <name>Tautvydas Versockas</name>
         </author>
-        <link href="https://tautvydasversockas.github.io/thehonestcoder./once-upon-a-time-on-valentines-day/"/>
-        <id>https://tautvydasversockas.github.io/thehonestcoder./once-upon-a-time-on-valentines-day/</id>
-        <media:content url="https://tautvydasversockas.github.io/thehonestcoder./media/posts/13/heart-featured.webp" medium="image" />
+        <link href="https://tautvydasversockas.github.io/thehonestcoder/once-upon-a-time-on-valentines-day/"/>
+        <id>https://tautvydasversockas.github.io/thehonestcoder/once-upon-a-time-on-valentines-day/</id>
+        <media:content url="https://tautvydasversockas.github.io/thehonestcoder/media/posts/13/heart-featured.webp" medium="image" />
             <category term="Fun"/>
 
         <updated>2021-02-12T12:00:00+02:00</updated>
             <summary>
                 <![CDATA[
-                        <img src="https://tautvydasversockas.github.io/thehonestcoder./media/posts/13/heart-featured.webp" alt="A heart." />
+                        <img src="https://tautvydasversockas.github.io/thehonestcoder/media/posts/13/heart-featured.webp" alt="A heart." />
                     <p>I'm not a romantic guy. At least I never thought I was meant to be one. But some things change, and there's nothing you can do about it.</p>
 
                 ]]>
