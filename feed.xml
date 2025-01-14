@@ -3,12 +3,32 @@
     <title>The Honest Coder</title>
     <link href="https://thehonestcoder.com/feed.xml" rel="self" />
     <link href="https://thehonestcoder.com" />
-    <updated>2025-01-12T18:32:08+02:00</updated>
+    <updated>2025-01-15T00:51:13+02:00</updated>
     <author>
         <name>Tautvydas Versockas</name>
     </author>
     <id>https://thehonestcoder.com</id>
 
+    <entry>
+        <title>From WordPress to Publii: Why I Made the Switch</title>
+        <author>
+            <name>Tautvydas Versockas</name>
+        </author>
+        <link href="https://thehonestcoder.com/wordpress-to-publii-switch/"/>
+        <id>https://thehonestcoder.com/wordpress-to-publii-switch/</id>
+        <media:content url="https://thehonestcoder.com/media/posts/20/wordpress-to-publii-featured.webp" medium="image" />
+            <category term="Life"/>
+
+        <updated>2025-01-14T17:53:52+02:00</updated>
+            <summary>
+                <![CDATA[
+                        <img src="https://thehonestcoder.com/media/posts/20/wordpress-to-publii-featured.webp" alt="WordPress to Publii." />
+                    <p data-pm-slice="1 1 []">4 reasons why I switched from WordPress to Publii.</p>
+
+                ]]>
+            </summary>
+        <content></content>
+    </entry>
     <entry>
         <title>How to Sabotage Your Software Company in 10 Easy Steps (Without Getting Caught)</title>
         <author>
@@ -187,26 +207,6 @@
                 <![CDATA[
                         <img src="https://thehonestcoder.com/media/posts/14/audiobooks-featured.webp" alt="A software engineer with headphones on working on a laptop." />
                     <p>There's only so much a busy software engineer can do in a day. Audiobooks and podcasts are a great way of making the best out of those few precious hours!</p>
-
-                ]]>
-            </summary>
-        <content></content>
-    </entry>
-    <entry>
-        <title>Once Upon a Time on Valentine&#x27;s Day</title>
-        <author>
-            <name>Tautvydas Versockas</name>
-        </author>
-        <link href="https://thehonestcoder.com/once-upon-a-time-on-valentines-day/"/>
-        <id>https://thehonestcoder.com/once-upon-a-time-on-valentines-day/</id>
-        <media:content url="https://thehonestcoder.com/media/posts/13/heart-featured.webp" medium="image" />
-            <category term="Fun"/>
-
-        <updated>2021-02-12T12:00:00+02:00</updated>
-            <summary>
-                <![CDATA[
-                        <img src="https://thehonestcoder.com/media/posts/13/heart-featured.webp" alt="A heart." />
-                    <p>I'm not a romantic guy. At least I never thought I was meant to be one. But some things change, and there's nothing you can do about it.</p>
 
                 ]]>
             </summary>
