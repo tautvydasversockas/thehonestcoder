@@ -73,6 +73,34 @@
 <lastmod>2025-01-13T18:47:19+02:00</lastmod>
 </url>
 <url>
+<loc>https://thehonestcoder.com/are-code-reviews-killing-your-delivery-speed/</loc>
+<lastmod>2025-03-23T18:10:52+02:00</lastmod>
+<image:image>
+<image:loc>https://thehonestcoder.com/media/posts/21/code-review-timer.webp</image:loc>
+<image:title><![CDATA[Code review.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://thehonestcoder.com/media/posts/21/code-review-simple.webp</image:loc>
+<image:title><![CDATA[Simple code review.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://thehonestcoder.com/media/posts/21/code-review-rejected.webp</image:loc>
+<image:title><![CDATA[Rejected code review.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://thehonestcoder.com/media/posts/21/code-review-discuss.webp</image:loc>
+<image:title><![CDATA[Code review with a discussion.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://thehonestcoder.com/media/posts/21/code-review-paircode.webp</image:loc>
+<image:title><![CDATA[Pair coding.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://thehonestcoder.com/media/posts/21/cpde-review-live-review.webp</image:loc>
+<image:title><![CDATA[Live code review.]]></image:title>
+</image:image>
+</url>
+<url>
 <loc>https://thehonestcoder.com/building-multilingual-relational-databases/</loc>
 <lastmod>2025-01-12T18:26:57+02:00</lastmod>
 <image:image>
@@ -177,6 +205,9 @@
 </url>
 <url>
 <loc>https://thehonestcoder.com/page/2/</loc>
+</url>
+<url>
+<loc>https://thehonestcoder.com/page/3/</loc>
 </url>
 <url>
 <loc>https://thehonestcoder.com/playlist-for-the-big-release/</loc>

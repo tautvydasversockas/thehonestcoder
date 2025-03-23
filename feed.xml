@@ -3,12 +3,32 @@
     <title>The Honest Coder</title>
     <link href="https://thehonestcoder.com/feed.xml" rel="self" />
     <link href="https://thehonestcoder.com" />
-    <updated>2025-01-15T00:51:13+02:00</updated>
+    <updated>2025-03-23T18:10:52+02:00</updated>
     <author>
         <name>Tautvydas Versockas</name>
     </author>
     <id>https://thehonestcoder.com</id>
 
+    <entry>
+        <title>Are Code Reviews Killing Your Delivery Speed?</title>
+        <author>
+            <name>Tautvydas Versockas</name>
+        </author>
+        <link href="https://thehonestcoder.com/are-code-reviews-killing-your-delivery-speed/"/>
+        <id>https://thehonestcoder.com/are-code-reviews-killing-your-delivery-speed/</id>
+        <media:content url="https://thehonestcoder.com/media/posts/21/code-review-timer.webp" medium="image" />
+            <category term="Technical Leadership"/>
+
+        <updated>2025-03-23T12:48:30+02:00</updated>
+            <summary>
+                <![CDATA[
+                        <img src="https://thehonestcoder.com/media/posts/21/code-review-timer.webp" alt="Code review." />
+                    <p class="p1">Discover 3 strategies you can implement now to ensure no code review will slow you down.</p>
+
+                ]]>
+            </summary>
+        <content></content>
+    </entry>
     <entry>
         <title>From WordPress to Publii: Why I Made the Switch</title>
         <author>
@@ -187,26 +207,6 @@
                 <![CDATA[
                         <img src="https://thehonestcoder.com/media/posts/15/zookeeper-featured.webp" alt="Apache ZooKeeper logo." />
                     <p>Building reliable distributed software solutions is not an easy task. However, it gets slightly easier using Apache ZooKeeper.</p>
-
-                ]]>
-            </summary>
-        <content></content>
-    </entry>
-    <entry>
-        <title>Top 10 Audiobooks to Listen as a Software Engineer</title>
-        <author>
-            <name>Tautvydas Versockas</name>
-        </author>
-        <link href="https://thehonestcoder.com/top-10-audiobooks-to-listen-to-as-a-software-engineer/"/>
-        <id>https://thehonestcoder.com/top-10-audiobooks-to-listen-to-as-a-software-engineer/</id>
-        <media:content url="https://thehonestcoder.com/media/posts/14/audiobooks-featured.webp" medium="image" />
-            <category term="Life"/>
-
-        <updated>2021-04-14T12:00:00+03:00</updated>
-            <summary>
-                <![CDATA[
-                        <img src="https://thehonestcoder.com/media/posts/14/audiobooks-featured.webp" alt="A software engineer with headphones on working on a laptop." />
-                    <p>There's only so much a busy software engineer can do in a day. Audiobooks and podcasts are a great way of making the best out of those few precious hours!</p>
 
                 ]]>
             </summary>

@@ -11,6 +11,21 @@
     },
     "items": [
         {
+            "id": "https://thehonestcoder.com/are-code-reviews-killing-your-delivery-speed/",
+            "url": "https://thehonestcoder.com/are-code-reviews-killing-your-delivery-speed/",
+            "title": "Are Code Reviews Killing Your Delivery Speed?",
+            "summary": "<p class=\"p1\">Discover 3 strategies you can implement now to ensure no code review will slow you down.</p>\n",
+            "image": "https://thehonestcoder.com/media/posts/21/code-review-timer.webp",
+            "author": {
+                "name": "Tautvydas Versockas"
+            },
+            "tags": [
+                   "Technical Leadership"
+            ],
+            "date_published": "2025-03-23T12:48:30+02:00",
+            "date_modified": "2025-03-23T18:10:52+02:00"
+        },
+        {
             "id": "https://thehonestcoder.com/wordpress-to-publii-switch/",
             "url": "https://thehonestcoder.com/wordpress-to-publii-switch/",
             "title": "From WordPress to Publii: Why I Made the Switch",
@@ -147,21 +162,6 @@
             ],
             "date_published": "2021-07-14T12:00:00+03:00",
             "date_modified": "2025-01-12T00:10:58+02:00"
-        },
-        {
-            "id": "https://thehonestcoder.com/top-10-audiobooks-to-listen-to-as-a-software-engineer/",
-            "url": "https://thehonestcoder.com/top-10-audiobooks-to-listen-to-as-a-software-engineer/",
-            "title": "Top 10 Audiobooks to Listen as a Software Engineer",
-            "summary": "<p>There's only so much a busy software engineer can do in a day. Audiobooks and podcasts are a great way of making the best out of those few precious hours!</p>\n",
-            "image": "https://thehonestcoder.com/media/posts/14/audiobooks-featured.webp",
-            "author": {
-                "name": "Tautvydas Versockas"
-            },
-            "tags": [
-                   "Life"
-            ],
-            "date_published": "2021-04-14T12:00:00+03:00",
-            "date_modified": "2025-01-12T18:04:10+02:00"
         }
     ]
 }
