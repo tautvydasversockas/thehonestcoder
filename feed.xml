@@ -3,12 +3,32 @@
     <title>The Honest Coder</title>
     <link href="https://thehonestcoder.com/feed.xml" rel="self" />
     <link href="https://thehonestcoder.com" />
-    <updated>2025-08-26T10:59:19+03:00</updated>
+    <updated>2025-11-16T21:03:20+02:00</updated>
     <author>
         <name>Tautvydas Versockas</name>
     </author>
     <id>https://thehonestcoder.com</id>
 
+    <entry>
+        <title>14 Simple Steps That Make You Instantly Safer on the Internet</title>
+        <author>
+            <name>Tautvydas Versockas</name>
+        </author>
+        <link href="https://thehonestcoder.com/14-simple-steps-that-make-you-instantly-safer-on-the-internet/"/>
+        <id>https://thehonestcoder.com/14-simple-steps-that-make-you-instantly-safer-on-the-internet/</id>
+        <media:content url="https://thehonestcoder.com/media/posts/22/simple-steps-that-make-you-instantly-safer-featured.webp" medium="image" />
+            <category term="Security"/>
+
+        <updated>2025-11-16T20:32:32+02:00</updated>
+            <summary>
+                <![CDATA[
+                        <img src="https://thehonestcoder.com/media/posts/22/simple-steps-that-make-you-instantly-safer-featured.webp" alt="A knight on the internet." />
+                    <p>From strong passwords and multi-factor authentication to privacy-friendly apps and email aliases, these 14 simple steps make you instantly safer on the internet.</p>
+
+                ]]>
+            </summary>
+        <content></content>
+    </entry>
     <entry>
         <title>Are Code Reviews Killing Your Delivery Speed?</title>
         <author>
@@ -187,26 +207,6 @@
                 <![CDATA[
                         <img src="https://thehonestcoder.com/media/posts/16/redpanda-featured.webp" alt="Redpanda logo." />
                     <p>Redpanda - ZooKeeper-free, JVM-free, Kafka compatible, and up to 10 times faster than Kafka. What's not to like!</p>
-
-                ]]>
-            </summary>
-        <content></content>
-    </entry>
-    <entry>
-        <title>Service Leader Election With .NET and Apache ZooKeeper</title>
-        <author>
-            <name>Tautvydas Versockas</name>
-        </author>
-        <link href="https://thehonestcoder.com/service-leader-election-with-net-and-apache-zookeeper/"/>
-        <id>https://thehonestcoder.com/service-leader-election-with-net-and-apache-zookeeper/</id>
-        <media:content url="https://thehonestcoder.com/media/posts/15/zookeeper-featured.webp" medium="image" />
-            <category term="System Design"/>
-
-        <updated>2021-07-14T12:00:00+03:00</updated>
-            <summary>
-                <![CDATA[
-                        <img src="https://thehonestcoder.com/media/posts/15/zookeeper-featured.webp" alt="Apache ZooKeeper logo." />
-                    <p>Building reliable distributed software solutions is not an easy task. However, it gets slightly easier using Apache ZooKeeper.</p>
 
                 ]]>
             </summary>

@@ -11,6 +11,21 @@
     },
     "items": [
         {
+            "id": "https://thehonestcoder.com/14-simple-steps-that-make-you-instantly-safer-on-the-internet/",
+            "url": "https://thehonestcoder.com/14-simple-steps-that-make-you-instantly-safer-on-the-internet/",
+            "title": "14 Simple Steps That Make You Instantly Safer on the Internet",
+            "summary": "<p>From strong passwords and multi-factor authentication to privacy-friendly apps and email aliases, these 14 simple steps make you instantly safer on the internet.</p>\n",
+            "image": "https://thehonestcoder.com/media/posts/22/simple-steps-that-make-you-instantly-safer-featured.webp",
+            "author": {
+                "name": "Tautvydas Versockas"
+            },
+            "tags": [
+                   "Security"
+            ],
+            "date_published": "2025-11-16T20:32:32+02:00",
+            "date_modified": "2025-11-16T21:03:20+02:00"
+        },
+        {
             "id": "https://thehonestcoder.com/are-code-reviews-killing-your-delivery-speed/",
             "url": "https://thehonestcoder.com/are-code-reviews-killing-your-delivery-speed/",
             "title": "Are Code Reviews Killing Your Delivery Speed?",
@@ -147,21 +162,6 @@
             ],
             "date_published": "2022-02-20T12:00:00+02:00",
             "date_modified": "2025-01-12T00:09:50+02:00"
-        },
-        {
-            "id": "https://thehonestcoder.com/service-leader-election-with-net-and-apache-zookeeper/",
-            "url": "https://thehonestcoder.com/service-leader-election-with-net-and-apache-zookeeper/",
-            "title": "Service Leader Election With .NET and Apache ZooKeeper",
-            "summary": "<p>Building reliable distributed software solutions is not an easy task. However, it gets slightly easier using Apache ZooKeeper.</p>\n",
-            "image": "https://thehonestcoder.com/media/posts/15/zookeeper-featured.webp",
-            "author": {
-                "name": "Tautvydas Versockas"
-            },
-            "tags": [
-                   "System Design"
-            ],
-            "date_published": "2021-07-14T12:00:00+03:00",
-            "date_modified": "2025-01-12T00:10:58+02:00"
         }
     ]
 }
