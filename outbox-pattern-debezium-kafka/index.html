@@ -1,0 +1,884 @@
+<!DOCTYPE html><html lang="en-gb"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Reliable Event Publishing: Outbox Pattern with PostgreSQL, Debezium, and Kafka - The Honest Coder</title><meta name="description" content="Learn how to implement the Outbox pattern with PostgreSQL, Debezium, and Kafka (using Redpanda)."><meta name="generator" content="Publii Open-Source CMS for Static Site"><script type="gdpr-blocker/analytics" async src="https://www.googletagmanager.com/gtag/js?id=G-P87PBR2D4P"></script><script type="gdpr-blocker/analytics">window.dataLayer = window.dataLayer || [];
+				  function gtag(){dataLayer.push(arguments);}
+				  gtag('js', new Date());
+				  gtag('config', 'G-P87PBR2D4P' );</script><link rel="stylesheet" href="https://thehonestcoder.com/media/plugins/syntaxHighlighter/prism-black.css"><link rel="canonical" href="https://thehonestcoder.com/outbox-pattern-debezium-kafka/"><link rel="alternate" type="application/atom+xml" href="https://thehonestcoder.com/feed.xml" title="The Honest Coder - RSS"><link rel="alternate" type="application/json" href="https://thehonestcoder.com/feed.json" title="The Honest Coder - JSON"><meta property="og:title" content="Reliable Event Publishing: Outbox Pattern with PostgreSQL, Debezium, and Kafka"><meta property="og:image" content="https://thehonestcoder.com/media/posts/23/outbox-debesium-featured.png"><meta property="og:image:width" content="2360"><meta property="og:image:height" content="1640"><meta property="og:site_name" content="The Honest Coder"><meta property="og:description" content="Learn how to implement the Outbox pattern with PostgreSQL, Debezium, and Kafka (using Redpanda)."><meta property="og:url" content="https://thehonestcoder.com/outbox-pattern-debezium-kafka/"><meta property="og:type" content="article"><meta name="twitter:card" content="summary"><meta name="twitter:site" content="@TheHonestCoder"><meta name="twitter:title" content="Reliable Event Publishing: Outbox Pattern with PostgreSQL, Debezium, and Kafka"><meta name="twitter:description" content="Learn how to implement the Outbox pattern with PostgreSQL, Debezium, and Kafka (using Redpanda)."><meta name="twitter:image" content="https://thehonestcoder.com/media/posts/23/outbox-debesium-featured.png"><link rel="shortcut icon" href="https://thehonestcoder.com/media/website/logo-v3.webp" type="image/x-icon"><link rel="preload" href="https://thehonestcoder.com/assets/dynamic/fonts/publicsans/publicsans.woff2" as="font" type="font/woff2" crossorigin><link rel="stylesheet" href="https://thehonestcoder.com/assets/css/style.css?v=30c72d59656faab72e55eb4b4a720e22"><script type="application/ld+json">{"@context":"http://schema.org","@type":"Article","mainEntityOfPage":{"@type":"WebPage","@id":"https://thehonestcoder.com/outbox-pattern-debezium-kafka/"},"headline":"Reliable Event Publishing: Outbox Pattern with PostgreSQL, Debezium, and Kafka","datePublished":"2025-12-08T14:59+02:00","dateModified":"2025-12-08T22:59+02:00","image":{"@type":"ImageObject","url":"https://thehonestcoder.com/media/posts/23/outbox-debesium-featured.png","height":1640,"width":2360},"description":"Learn how to implement the Outbox pattern with PostgreSQL, Debezium, and Kafka (using Redpanda).","author":{"@type":"Person","name":"Tautvydas Versockas","url":"https://thehonestcoder.com/authors/tautvydas-versockas/"},"publisher":{"@type":"Organization","name":"Tautvydas Versockas","logo":{"@type":"ImageObject","url":"https://thehonestcoder.com/media/website/logo-v3-2.webp","height":500,"width":500}}}</script><noscript><style>img[loading] {
+                    opacity: 1;
+                }</style></noscript></head><body class="post-template"><div class="container"><div class="left-bar"><div class="left-bar__inner"><header class="header"><a class="logo" href="https://thehonestcoder.com/"><img src="https://thehonestcoder.com/media/website/logo-v3-2.webp" alt="The Honest Coder" width="500" height="500"></a><nav class="navbar"><button class="navbar__toggle" aria-label="Menu" aria-haspopup="true" aria-expanded="false"><span class="navbar__toggle__box"><span class="navbar__toggle__inner">Menu</span></span></button><ul class="navbar__menu"><li><a href="https://thehonestcoder.com/" target="_self" aria-label="Home"><span>Home</span></a></li><li><a href="https://thehonestcoder.com/about/" target="_self" aria-label="About me"><span>About me</span></a></li><li><a href="https://thehonestcoder.com/speaking/" target="_self" aria-label="Speaking"><span>Speaking</span></a></li></ul></nav><a class="logo logo--atbottom" href="https://thehonestcoder.com/"><img src="https://thehonestcoder.com/media/website/logo-v3-2.webp" alt="The Honest Coder" width="500" height="500"></a></header></div></div><main class="main post"><article class="content"><figure class="content__featured-image content__featured-image--attop"><img src="https://thehonestcoder.com/media/posts/23/outbox-debesium-featured.png" srcset="https://thehonestcoder.com/media/posts/23/responsive/outbox-debesium-featured-xs.png 320w, https://thehonestcoder.com/media/posts/23/responsive/outbox-debesium-featured-sm.png 480w, https://thehonestcoder.com/media/posts/23/responsive/outbox-debesium-featured-md.png 768w, https://thehonestcoder.com/media/posts/23/responsive/outbox-debesium-featured-xl.png 1024w" sizes="(min-width: 1460px) 938px, (min-width: 1200px) calc(75.83vw - 154px), (min-width: 1120px) 938px, (min-width: 900px) calc(55vw + 333px), 100vw" loading="eager" height="1640" width="2360" alt="PostgreSQL, Debezium, and Kafka." aria-describedby="image-caption"></figure><div class="main__inner"><div class="content__meta"><div class="content__date"><time datetime="2025-12-08T14:59">Dec 8, 2025</time></div><span class="meta-separator date-meta-separator">•</span> <span class="meta-separator reading-time-meta-separator">•</span><div class="content__maintag"><a href="https://thehonestcoder.com/tags/system-design/" class="metadata__maintag">System Design</a></div></div><header class="content__header"><h1 class="content__title">Reliable Event Publishing: Outbox Pattern with PostgreSQL, Debezium, and Kafka</h1></header><div class="content__entry"><p>The Outbox pattern is a widely used technique for ensuring that database updates and message publishing happen atomically - without the complexity of two-phase commits (2PC). A common approach is to update your data and insert a message into an outbox table within the same transaction, then have a process that polls the table and sends messages to a messaging platform like RabbitMQ or Kafka. This method works for simple scenarios, but it has several drawbacks: polling adds latency, increases database load, and can make scaling difficult.</p><p>A more effective Outbox pattern implementation alternative is to use change data capture (CDC) with an open-source tool like Debezium, which can automatically stream your database changes to your messaging system. In this post, I’ll show how to set it up using PostgreSQL and <a href="https://thehonestcoder.com/redpanda-a-new-cool-kid-on-the-event-streaming-block/" target="_blank" rel="noopener noreferrer">Redpanda<svg width="20" height="20" viewbox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="block h-[0.75em] w-[0.75em] stroke-current stroke-[0.75]"><path d="M14.3349 13.3301V6.60645L5.47065 15.4707C5.21095 15.7304 4.78895 15.7304 4.52925 15.4707C4.26955 15.211 4.26955 14.789 4.52925 14.5293L13.3935 5.66504H6.66011C6.29284 5.66504 5.99507 5.36727 5.99507 5C5.99507 4.63273 6.29284 4.33496 6.66011 4.33496H14.9999L15.1337 4.34863C15.4369 4.41057 15.665 4.67857 15.665 5V13.3301C15.6649 13.6973 15.3672 13.9951 14.9999 13.9951C14.6327 13.9951 14.335 13.6973 14.3349 13.3301Z"></path></svg></a>, a Kafka-like streaming platform. </p><h3>Setting Up PostgreSQL, Redpanda, and Debezium</h3><p>First, let's define PostgreSQL, Redpanda, and Debezium containers for Docker Compose:</p><pre class="language-docker"><code>services:
+
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+    ports:
+      - "5432:5432"
+    command: ["postgres", "-c", "wal_level=logical", "-c", "max_replication_slots=4", "-c", "max_wal_senders=4"]
+    volumes:
+      - pgdata:/var/lib/postgresql
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: <span class="obfuscated-email" data-user="nimda" data-domain="moc.elpmaxe" data-type="text"></span>
+      PGADMIN_DEFAULT_PASSWORD: password
+    ports:
+      - "8081:80"
+
+  redpanda:
+    image: redpandadata/redpanda
+    command:
+      - redpanda
+      - start
+      - --overprovisioned
+      - --smp 1
+      - --memory 1G
+      - --reserve-memory 0M
+      - --node-id 0
+      - --check=false
+      - --kafka-addr PLAINTEXT://0.0.0.0:9092,OUTSIDE://0.0.0.0:29092
+      - --advertise-kafka-addr PLAINTEXT://redpanda:9092,OUTSIDE://redpanda:29092
+    ports:
+      - "9092:9092"     # Kafka API
+      - "29092:29092"   # Internal Kafka API (for other containers)
+      - "8082:8082"     # Admin API
+    volumes:
+      - redpanda-data:/var/lib/redpanda/data
+
+  redpanda-console:
+    image: redpandadata/console
+    depends_on:
+      - redpanda
+    environment:
+      REDPANDA_ADMIN: redpanda:8082
+      KAFKA_BROKERS: redpanda:9092
+    ports:
+      - "8080:8080"
+
+  debezium-connect:
+    image: quay.io/debezium/connect
+    depends_on:
+      - redpanda
+      - postgres
+    ports:
+      - "8083:8083"
+    environment:
+      BOOTSTRAP_SERVERS: redpanda:9092
+      GROUP_ID: 1
+      CONFIG_STORAGE_TOPIC: connect_config
+      OFFSET_STORAGE_TOPIC: connect_offsets
+      STATUS_STORAGE_TOPIC: connect_status
+      KEY_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      VALUE_CONVERTER: org.apache.kafka.connect.json.JsonConverter
+      CONFIG_STORAGE_REPLICATION_FACTOR: 1
+      OFFSET_STORAGE_REPLICATION_FACTOR: 1
+      STATUS_STORAGE_REPLICATION_FACTOR: 1
+
+volumes:
+  pgdata:
+  redpanda-data:</code></pre><p>Notice the command arguments for the PostgreSQL container. These settings enable WAL (Write-Ahead Log), which PostgreSQL uses to record data changes in real-time, which is what makes CDC possible.</p><p>You might be wondering why we’re using Redpanda instead of Kafka. I chose Redpanda for this demo because it’s lighter and easier to run, while remaining fully compatible with Kafka clients. Don’t worry - you could swap it with Kafka without any application level changes.</p><p>Once your Docker Compose file is ready, run:</p><pre class="language-bash"><code>docker compose up -d</code></pre><p>If anything refuses to start on the first try, just nuke the volumes and try again - I’ve done that more times than I want to admit.</p><p>With all services up and running, you should be able to access PostgreSQL Admin at <code data-start="160" data-end="176">localhost:8081</code> and Redpanda Console at <code data-start="205" data-end="221">localhost:8080</code>. </p><h3>Creating PostgreSQL Tables and Setting Up Replication</h3><p>Next, we'll create <code>users</code> and <code>outbox</code> tables:</p><pre class="language-sql"><code>CREATE TABLE users (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    username VARCHAR(50) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE outbox (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    aggregate_type VARCHAR NOT NULL, 
+    aggregate_id VARCHAR NOT NULL, 
+    event_type VARCHAR NOT NULL, 
+    payload JSONB NOT NULL,                
+    created_at TIMESTAMPTZ DEFAULT NOW()
+);</code></pre><p>Let's not forget to grant <code>REPLICATION</code> privileges - Debezium won’t stream changes without it. The first time I wired this up I forgot to do this and spent way too long wondering why nothing was streaming.</p><pre class="language-sql"><code>ALTER ROLE postgres WITH REPLICATION</code></pre><p>Note that granting <code data-start="68" data-end="81">REPLICATION</code> privileges to the <code data-start="100" data-end="110">postgres</code> superuser is fine for this demo, but in a real-world environment, it’s best to create a separate user specifically for Debezium. </p><h3>Configuring Debezium</h3><p>Now, let’s tell Debezium what to watch. Create a file called <code>register-connector.json</code> with the following configuration:</p><pre class="language-json"><code>{
+    "name": "postgres-outbox-connector",
+    "config": {
+        "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+        "database.hostname": "postgres",
+        "database.port": "5432",
+        "database.user": "postgres",
+        "database.password": "password",
+        "database.dbname": "postgres",
+        "database.server.name": "postgres",
+        "plugin.name": "pgoutput",
+        "table.include.list": "public.outbox",
+        "topic.prefix": "postgres",
+        "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+        "key.converter.schemas.enable": "false",
+        "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+        "value.converter.schemas.enable": "false",
+        "transforms": "outbox",
+        "transforms.outbox.type": "io.debezium.transforms.outbox.EventRouter",
+        "transforms.outbox.unwrap.type": "true",
+        "transforms.outbox.drop.tombstones": "true",
+        "transforms.outbox.table.field.event.payload": "payload",
+        "transforms.outbox.table.field.event.id": "id",
+        "transforms.outbox.table.field.event.key": "aggregate_id",
+        "transforms.outbox.table.field.event.type": "event_type",
+        "transforms.outbox.route.by.field": "event_type",
+        "transforms.outbox.route.topic.replacement": "user-service-events"
+    }
+}</code></pre><p>This configuration publishes messages from the <code data-start="5557" data-end="5565">outbox</code> table to the <code data-start="5579" data-end="5600">user-service-events</code> topic in Redpanda. The <code data-start="155" data-end="164">payload</code> JSON becomes the Redpanda message value, and the <code data-start="205" data-end="219">aggregate_id</code> field is used as the message key.</p><p>Send the configuration to Debezium using:</p><pre class="language-bash"><code>curl -X POST \
+  -H "Content-Type: application/json" \
+  --data @register-connector.json \
+  http://localhost:8083/connectors</code></pre><h3>Testing The Setup</h3><p>Let’s create a simple Rust app that creates a user and writes a <code data-start="5888" data-end="5902">user_created</code> event to the <code data-start="5916" data-end="5924">outbox</code> table.</p><h4>1. Add dependencies in <code data-start="5962" data-end="5974">Cargo.toml</code></h4><pre class="language-apacheconf"><code>[package]
+name = "postgresql-cdc"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+anyhow = "1.0.100"
+serde = { version = "1.0.228", features = ["derive"] }
+serde_json = "1.0.145"
+sqlx = { version = "0.8.6", features = [
+    "postgres",
+    "tls-rustls",
+    "uuid",
+    "json",
+    "macros",
+    "runtime-tokio",
+] }
+tokio = { version = "1.48.0", features = ["full"] }
+uuid = { version = "1.3", features = ["v4", "serde"] }
+</code></pre><h4>2. Define the <code data-start="6434" data-end="6440">User</code> model in <code data-start="6450" data-end="6461">models.rs</code></h4><pre class="language-rust"><code>use uuid::Uuid;
+
+pub struct User {
+    pub id: Uuid,
+    pub username: String,
+    pub email: String,
+}
+</code></pre><h4>3. Define events in <code data-start="6604" data-end="6615">events.rs</code></h4><pre class="language-rust"><code>use serde::Serialize;
+use uuid::Uuid;
+
+#[derive(Serialize, Debug)]
+pub struct EventEnvelope&lt;T&gt; {
+    pub event_type: String,
+    pub correlation_id: Uuid,
+    pub payload: T,
+}
+
+#[derive(Serialize, Debug)]
+pub struct UserCreatedEvent {
+    pub id: Uuid,
+    pub username: String,
+    pub email: String,
+}
+</code></pre><h4>4. Main app logic in <code data-start="6960" data-end="6969">main.rs</code></h4><pre class="language-rust"><code>use anyhow::Result;
+use sqlx::{PgPool, Postgres, Transaction};
+use uuid::Uuid;
+mod events;
+mod models;
+
+#[tokio::main]
+async fn main() -&gt; Result&lt;()&gt; {
+    let pool = PgPool::connect("postgres://postgres:password@localhost/postgres").await?;
+
+    let mut tx: Transaction&lt;'_, Postgres&gt; = pool.begin().await?;
+
+    let user = models::User {
+        id: Uuid::new_v4(),
+        username: "bob".into(),
+        email: "<span class="obfuscated-email" data-user="bob" data-domain="moc.ynapmoc" data-type="text"></span>".into(),
+    };
+
+    sqlx::query!(
+        r#"
+        INSERT INTO users (id, username, email)
+        VALUES ($1, $2, $3)
+        "#,
+        user.id,
+        user.username,
+        user.email,
+    )
+    .execute(&amp;mut *tx)
+    .await?;
+
+    let evt = events::UserCreatedEvent {
+        id: user.id,
+        username: user.username,
+        email: user.email,
+    };
+
+    let envelope = events::EventEnvelope {
+        event_type: "user_created".into(),
+        correlation_id: Uuid::new_v4(),
+        payload: evt,
+    };
+
+    let outbox_payload = serde_json::to_value(&amp;envelope)?;
+
+    sqlx::query!(
+        r#"
+        INSERT INTO outbox (aggregate_type, aggregate_id, event_type, payload)
+        VALUES ($1, $2, $3, $4)
+        "#,
+        "user",
+        user.id.to_string(),
+        envelope.event_type,
+        outbox_payload
+    )
+    .execute(&amp;mut *tx)
+    .await?;
+
+    tx.commit().await?;
+
+    println!("Created user {} and outbox event", user.id);
+
+    Ok(())
+}
+</code></pre><p>Run the app:</p><pre class="language-bash"><code>cargo run</code></pre><p>You should see a new user in the <code data-start="8459" data-end="8466">users</code> table:</p><figure class="post__image"><figure class="post__image post__image--center"><img loading="lazy" src="https://thehonestcoder.com/media/posts/23/debezium-postgres-users-2.webp" alt="PostgreSQL 'users' table." width="3014" height="1954" sizes="(min-width: 760px) 660px, calc(93.18vw - 30px)" srcset="https://thehonestcoder.com/media/posts/23/responsive/debezium-postgres-users-2-xs.webp 320w, https://thehonestcoder.com/media/posts/23/responsive/debezium-postgres-users-2-sm.webp 480w, https://thehonestcoder.com/media/posts/23/responsive/debezium-postgres-users-2-md.webp 768w, https://thehonestcoder.com/media/posts/23/responsive/debezium-postgres-users-2-xl.webp 1024w"></figure><figcaption>PostgreSQL <code>users</code> table.</figcaption></figure><p>A <code>user_created</code> event in the <code data-start="8490" data-end="8498">outbox</code> table:</p><figure class="post__image"><figure class="post__image post__image--center"><img loading="lazy" src="https://thehonestcoder.com/media/posts/23/debezium-postgres-outbox.webp" alt="PostgreSQL 'outbox' table." width="3014" height="1954" sizes="(min-width: 760px) 660px, calc(93.18vw - 30px)" srcset="https://thehonestcoder.com/media/posts/23/responsive/debezium-postgres-outbox-xs.webp 320w, https://thehonestcoder.com/media/posts/23/responsive/debezium-postgres-outbox-sm.webp 480w, https://thehonestcoder.com/media/posts/23/responsive/debezium-postgres-outbox-md.webp 768w, https://thehonestcoder.com/media/posts/23/responsive/debezium-postgres-outbox-xl.webp 1024w"></figure><figcaption>PostgreSQL <code>outbox</code> table.</figcaption></figure><p>And a message in the <code data-start="8527" data-end="8548">user-service-events</code> topic on Redpanda:</p><figure class="post__image"><figure class="post__image post__image--center"><img loading="lazy" src="https://thehonestcoder.com/media/posts/23/debezium-redpanda.webp" alt="Redpanda 'user-service-events' topic." width="3014" height="1954" sizes="(min-width: 760px) 660px, calc(93.18vw - 30px)" srcset="https://thehonestcoder.com/media/posts/23/responsive/debezium-redpanda-xs.webp 320w, https://thehonestcoder.com/media/posts/23/responsive/debezium-redpanda-sm.webp 480w, https://thehonestcoder.com/media/posts/23/responsive/debezium-redpanda-md.webp 768w, https://thehonestcoder.com/media/posts/23/responsive/debezium-redpanda-xl.webp 1024w"></figure><figcaption>Redpanda <code>user-service-events</code> topic.</figcaption></figure><p>It’s worth noting that an Outbox and CDC setup uses at-least-once delivery semantics, which means downstream consumers should be <a href="https://thehonestcoder.com/retry-requests-fearlessly-with-idempotence/" target="_blank" rel="noopener noreferrer">idempotent<svg width="20" height="20" viewbox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="block h-[0.75em] w-[0.75em] stroke-current stroke-[0.75]"><path d="M14.3349 13.3301V6.60645L5.47065 15.4707C5.21095 15.7304 4.78895 15.7304 4.52925 15.4707C4.26955 15.211 4.26955 14.789 4.52925 14.5293L13.3935 5.66504H6.66011C6.29284 5.66504 5.99507 5.36727 5.99507 5C5.99507 4.63273 6.29284 4.33496 6.66011 4.33496H14.9999L15.1337 4.34863C15.4369 4.41057 15.665 4.67857 15.665 5V13.3301C15.6649 13.6973 15.3672 13.9951 14.9999 13.9951C14.6327 13.9951 14.335 13.6973 14.3349 13.3301Z"></path></svg></a>.</p><h2 data-start="8574" data-end="8587">Conclusion</h2><p data-start="8589" data-end="8803">Congratulations! You now have a working Outbox pattern setup using PostgreSQL, Debezium, and Redpanda. This approach avoids polling delays, reduces database load, and scales better than the naive outbox polling approach.</p><p data-start="8805" data-end="8949">The full code is available in the <a href="#" target="_blank" rel="noopener noreferrer"></a><a href="https://github.com/tautvydasversockas/postgresql-cdc" target="_blank" rel="noopener noreferrer">GitHub repository<svg width="20" height="20" viewbox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="block h-[0.75em] w-[0.75em] stroke-current stroke-[0.75]"><path d="M14.3349 13.3301V6.60645L5.47065 15.4707C5.21095 15.7304 4.78895 15.7304 4.52925 15.4707C4.26955 15.211 4.26955 14.789 4.52925 14.5293L13.3935 5.66504H6.66011C6.29284 5.66504 5.99507 5.36727 5.99507 5C5.99507 4.63273 6.29284 4.33496 6.66011 4.33496H14.9999L15.1337 4.34863C15.4369 4.41057 15.665 4.67857 15.665 5V13.3301C15.6649 13.6973 15.3672 13.9951 14.9999 13.9951C14.6327 13.9951 14.335 13.6973 14.3349 13.3301Z"></path></svg></a> for experimentation. </p><hr><p><em>I’d love to hear your thoughts on this setup - drop a comment below if you try it out!</em></p></div><footer class="content__footer"><div class="content__share"><a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fthehonestcoder.com%2Foutbox-pattern-debezium-kafka%2F" class="js-share facebook tltp tltp--top" aria-label="Facebook" rel="nofollow noopener noreferrer"><svg><use xlink:href="https://thehonestcoder.com/assets/svg/svg-map.svg#facebook"/></svg> <span>Facebook</span> </a><a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fthehonestcoder.com%2Foutbox-pattern-debezium-kafka%2F&amp;via=%40TheHonestCoder&amp;text=Reliable%20Event%20Publishing%3A%20Outbox%20Pattern%20with%20PostgreSQL%2C%20Debezium%2C%20and%20Kafka" class="js-share twitter tltp tltp--top" aria-label="Twitter" rel="nofollow noopener noreferrer"><svg><use xlink:href="https://thehonestcoder.com/assets/svg/svg-map.svg#twitter"/></svg> <span>Twitter</span> </a><a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fthehonestcoder.com%2Foutbox-pattern-debezium-kafka%2F" class="js-share linkedin tltp tltp--top" aria-label="Share with LinkedIn" rel="nofollow noopener noreferrer"><svg><use xlink:href="https://thehonestcoder.com/assets/svg/svg-map.svg#linkedin"/></svg> <span>LinkedIn</span></a></div></footer></div></article><div class="content__section post__related"><div class="main__inner"><h3 class="content__section__title">Related post</h3><div class="post__related__wrap"><article class="c-card"><div class="c-card__meta"><div class="c-card__author"><a href="https://thehonestcoder.com/authors/tautvydas-versockas/">Tautvydas Versockas</a></div><time datetime="2022-02-20T12:00">Feb 20, 2022 </time><a href="https://thehonestcoder.com/tags/system-design/" class="c-card-tag">System Design</a></div><a href="https://thehonestcoder.com/redpanda-a-new-cool-kid-on-the-event-streaming-block/" class="c-card__image"><img src="https://thehonestcoder.com/media/posts/16/redpanda-featured.webp" srcset="https://thehonestcoder.com/media/posts/16/responsive/redpanda-featured-xs.webp 320w, https://thehonestcoder.com/media/posts/16/responsive/redpanda-featured-sm.webp 480w" sizes="(min-width: 700px) 200px, (min-width: 480px) 160px, calc(100vw - 50px)" loading="lazy" height="864" width="1441" alt="Redpanda logo."></a><header class="c-card__header"><h2 class="c-card__title"><a href="https://thehonestcoder.com/redpanda-a-new-cool-kid-on-the-event-streaming-block/">Redpanda - A New Cool Kid on the Event Streaming Block</a></h2><p>Redpanda - ZooKeeper-free, JVM-free, Kafka compatible, and up to 10 times faster than Kafka. What's not to like!</p></header></article><article class="c-card"><div class="c-card__meta"><div class="c-card__author"><a href="https://thehonestcoder.com/authors/tautvydas-versockas/">Tautvydas Versockas</a></div><time datetime="2021-07-14T12:00">Jul 14, 2021 </time><a href="https://thehonestcoder.com/tags/system-design/" class="c-card-tag">System Design</a></div><a href="https://thehonestcoder.com/service-leader-election-with-net-and-apache-zookeeper/" class="c-card__image"><img src="https://thehonestcoder.com/media/posts/15/zookeeper-featured.webp" srcset="https://thehonestcoder.com/media/posts/15/responsive/zookeeper-featured-xs.webp 320w, https://thehonestcoder.com/media/posts/15/responsive/zookeeper-featured-sm.webp 480w" sizes="(min-width: 700px) 200px, (min-width: 480px) 160px, calc(100vw - 50px)" loading="lazy" height="735" width="1225" alt="Apache ZooKeeper logo."></a><header class="c-card__header"><h2 class="c-card__title"><a href="https://thehonestcoder.com/service-leader-election-with-net-and-apache-zookeeper/">Service Leader Election With .NET and Apache ZooKeeper</a></h2><p>Building reliable distributed software solutions is not an easy task. However, it gets slightly easier using Apache ZooKeeper.</p></header></article><article class="c-card"><div class="c-card__meta"><div class="c-card__author"><a href="https://thehonestcoder.com/authors/tautvydas-versockas/">Tautvydas Versockas</a></div><time datetime="2020-09-09T12:01">Sep 9, 2020 </time><a href="https://thehonestcoder.com/tags/system-design/" class="c-card-tag">System Design</a></div><a href="https://thehonestcoder.com/the-promised-land-of-event-sourcing/" class="c-card__image"><img src="https://thehonestcoder.com/media/posts/9/event-sourcing-featured.webp" srcset="https://thehonestcoder.com/media/posts/9/responsive/event-sourcing-featured-xs.webp 320w, https://thehonestcoder.com/media/posts/9/responsive/event-sourcing-featured-sm.webp 480w" sizes="(min-width: 700px) 200px, (min-width: 480px) 160px, calc(100vw - 50px)" loading="lazy" height="1241" width="2070" alt="Account events."></a><header class="c-card__header"><h2 class="c-card__title"><a href="https://thehonestcoder.com/the-promised-land-of-event-sourcing/">The Promised Land of Event Sourcing</a></h2><p>The guide you should read before starting with Event Sourcing.</p></header></article></div></div></div><div class="content__section banner"><div class="main__inner"><script src="https://giscus.app/client.js" data-repo="tautvydasversockas/thehonestcoder-discussions" data-repo-id="R_kgDOL-IysQ" data-category="Announcements" data-category-id="DIC_kwDOL-Iysc4CffdA" data-mapping="pathname" data-strict="1" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="preferred_color_scheme" data-lang="en" data-loading="lazy" crossorigin="anonymous" async></script></div></div></main><div class="right-bar"><div class="right-bar__inner"><div class="sidebar"><section class="box personal-picture"><a href="https://thehonestcoder.com/about" class="personal-picture__image"><img src="https://thehonestcoder.com/media/files/cropped-me.webp" alt="Tautvydas Versockas"></a></section><section class="box buymeacoffee"><a href="https://www.buymeacoffee.com/tautvydasverso" target="_blank"><img align="left" src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="50" width="210" alt="tautvydasverso"></a></section><section class="box tags"><h3 class="box__title">Recommended Topics</h3><ul class="tags__list"><li class="tags__item"><a href="https://thehonestcoder.com/tags/net/" class="btn btn--gray">.NET</a></li><li class="tags__item"><a href="https://thehonestcoder.com/tags/databases/" class="btn btn--gray">Databases</a></li><li class="tags__item"><a href="https://thehonestcoder.com/tags/fun/" class="btn btn--gray">Fun</a></li><li class="tags__item"><a href="https://thehonestcoder.com/tags/life/" class="btn btn--gray">Life</a></li><li class="tags__item"><a href="https://thehonestcoder.com/tags/security/" class="btn btn--gray">Security</a></li><li class="tags__item"><a href="https://thehonestcoder.com/tags/system-design/" class="btn btn--gray">System Design</a></li><li class="tags__item"><a href="https://thehonestcoder.com/tags/technical-leadership/" class="btn btn--gray">Technical Leadership</a></li></ul></section><div class="box follow"><a href="https://github.com/tautvydasversockas" class="tltp tltp--top" target="_blank" aria-label="GitHub"><svg><use xlink:href="https://thehonestcoder.com/assets/svg/svg-map.svg#github"/></svg> </a><a href="https://x.com/TheHonestCoder" class="tltp tltp--top" target="_blank" aria-label="Twitter"><svg><use xlink:href="https://thehonestcoder.com/assets/svg/svg-map.svg#twitter"/></svg> </a><a href="https://www.linkedin.com/in/tautvydasversockas/" class="tltp tltp--top" target="_blank" aria-label="LinkedIn"><svg><use xlink:href="https://thehonestcoder.com/assets/svg/svg-map.svg#linkedin"/></svg> </a><a href="https://thehonestcoder.com/feed.xml" class="tltp tltp--top" target="_blank" aria-label="RSS"><svg><use xlink:href="https://thehonestcoder.com/assets/svg/svg-map.svg#rss"/></svg></a></div><div class="box copyright">© 2025 Tautvydas Versockas</div></div></div></div></div><script defer="defer" src="https://thehonestcoder.com/assets/js/scripts.min.js?v=b2d91bcadbf5db401b76eb5bb3092eb7"></script><script>var images = document.querySelectorAll('img[loading]');
+        for (var i = 0; i < images.length; i++) {
+            if (images[i].complete) {
+                images[i].classList.add('is-loaded');
+            } else {
+                images[i].addEventListener('load', function () {
+                    this.classList.add('is-loaded');
+                }, false);
+            }
+        }</script><script>'use strict'; document.addEventListener('DOMContentLoaded', function() { var obfElements = document.querySelectorAll('.obfuscated-email'); obfElements.forEach(function(elem) { var dataType = elem.getAttribute('data-type'); var encodedEmail = elem.getAttribute('data-email'); var user = elem.getAttribute('data-user'); var domain = elem.getAttribute('data-domain'); var decodedEmail = ''; if (user && domain) { decodedEmail = user.split('').reverse().join('') + '@' + domain.split('').reverse().join(''); } else if (encodedEmail) { const parts = encodedEmail.split('@'); if (parts.length === 2) { decodedEmail = parts[0].split('').reverse().join('') + '@' + parts[1].split('').reverse().join(''); } else { decodedEmail = encodedEmail; } } if (dataType === 'mailto') { var originalText = elem.textContent.trim(); var a = document.createElement('a'); a.href = 'mailto:' + decodedEmail; if (elem.classList.length > 0) { a.className = elem.className; } if (originalText === '') { a.textContent = decodedEmail; } else { a.textContent = originalText; } elem.parentNode.replaceChild(a, elem); } else if (dataType === 'text') { var textNode = document.createTextNode(decodedEmail); elem.parentNode.replaceChild(textNode, elem); } }); });</script><script type="text/javascript">document.addEventListener("DOMContentLoaded", function() {
+            if (window.location.pathname !== '/') {
+                function calculateReadingTime() {
+                    let totalWords = 0;
+
+                    const textElements = document.querySelectorAll('.content__entry p');
+                    textElements.forEach(element => {
+                        totalWords += element.innerText.split(' ').filter(Boolean).length;
+                    });
+
+                    const headerElements = document.querySelectorAll('.content__entry .wp-block-heading');
+                    headerElements.forEach(element => {
+                        totalWords += element.innerText.split(' ').filter(Boolean).length;
+                    });
+
+                    const codeElements = document.querySelectorAll('.content__entry pre code');
+                    codeElements.forEach(element => {
+                        totalWords += element.innerText.split(' ').filter(Boolean).length;
+                    });
+
+                    const wordsPerMinute = 200;
+                    const readingTimeDecimal = totalWords / wordsPerMinute;
+                    const readingTimeMinutes = Math.floor(readingTimeDecimal);
+                    const fractionalMinute = readingTimeDecimal - readingTimeMinutes;
+                    const readingTimeSeconds = Math.round(fractionalMinute * 60);
+                    const timeString = readingTimeMinutes + (readingTimeSeconds > 29 ? 1 :0);
+                    const finalText = '%s min read'.replace('%s', timeString);
+
+                    const readingTimeElement = document.createElement('div');
+                    readingTimeElement.className = 'reading-time';                
+                    readingTimeElement.textContent = finalText;
+                    const targetElement = document.querySelector('.date-meta-separator');
+                    if (targetElement) 
+                        targetElement.insertAdjacentElement('afterend', readingTimeElement);
+                }
+                calculateReadingTime();
+            }            
+        });</script><script defer="defer" src="https://thehonestcoder.com/media/plugins/syntaxHighlighter/prism.js"></script><script defer="defer" src="https://thehonestcoder.com/media/plugins/syntaxHighlighter/clipboard.min.js"></script><script defer="defer" src="https://thehonestcoder.com/media/plugins/syntaxHighlighter/prism-copy-to-clipboard.min.js"></script><div class="pcb" data-behaviour="badge" data-behaviour-link="#cookie-settings" data-revision="1" data-config-ttl="90" data-debug-mode="false"><div role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="pcb-title" aria-describedby="pcb-txt" class="pcb__banner"><div class="pcb__inner"><div id="pcb-title" role="heading" aria-level="2" class="pcb__title">This website uses cookies</div><div id="pcb-txt" class="pcb__txt">We use cookies to enhance your browsing experience and analyze our traffic.</div><div class="pcb__buttons"><button type="button" class="pcb__btn pcb__btn--link pcb__btn--configure" aria-haspopup="dialog">Manage preferences</button> <button type="button" class="pcb__btn pcb__btn--solid pcb__btn--accept">Accept all</button></div></div></div><div class="pcb__popup" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="pcb-popup-title"><div class="pcb__popup__wrapper"><div class="pcb__inner pcb__popup__inner"><div class="pcb__popup__heading"><div id="pcb-popup-title" role="heading" aria-level="2" class="pcb__title">Cookie settings</div><button class="pcb__popup__close" aria-label="Close"></button></div><div class="pcb__popup__content"><div class="pcb__txt pcb__popup__txt">We use cookies to enhance your browsing experience and analyze our traffic. By clicking "Accept All", you consent to our use of cookies.</div><ul class="pcb__groups"><li class="pcb__group"><details><summary class="pcb__group__title no-desc">Analytics</summary></details><div class="pcb__popup__switch"><input type="checkbox" data-group-name="analytics" id="analytics-cookies"> <label for="analytics-cookies">Analytics</label></div></li></ul></div><div class="pcb__buttons pcb__popup__buttons"><button type="button" class="pcb__btn pcb__btn--solid pcb__btn--accept">Accept all</button> <button type="button" class="pcb__btn pcb__btn--reject"></button> <button type="button" class="pcb__btn pcb__btn--save">Save settings</button></div></div></div></div><div class="pcb__overlay" aria-hidden="true"></div><button class="pcb__badge" aria-label="Cookie Policy" aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" width="40" height="40" viewBox="0 0 23 23" fill="currentColor"><path d="M21.41 12.71c-.08-.01-.15 0-.22 0h-.03c-.03 0-.05 0-.08.01-.07 0-.13.01-.19.04-.52.21-1.44.19-2.02-.22-.44-.31-.65-.83-.62-1.53a.758.758 0 0 0-.27-.61.73.73 0 0 0-.65-.14c-1.98.51-3.49.23-4.26-.78-.82-1.08-.73-2.89.24-4.49.14-.23.14-.52 0-.75a.756.756 0 0 0-.67-.36c-.64.03-1.11-.1-1.31-.35-.19-.26-.13-.71-.01-1.29.04-.18.06-.38.03-.59-.05-.4-.4-.7-.81-.66C5.1 1.54 1 6.04 1 11.48 1 17.28 5.75 22 11.6 22c5.02 0 9.39-3.54 10.39-8.42.08-.4-.18-.78-.58-.87Zm-9.81 7.82c-5.03 0-9.12-4.06-9.12-9.06 0-4.34 3.05-8 7.25-8.86-.08.7.05 1.33.42 1.81.24.32.66.67 1.38.84-.76 1.86-.65 3.78.36 5.11.61.81 2.03 2 4.95 1.51.18.96.71 1.54 1.18 1.87.62.43 1.38.62 2.1.62.05 0 .09 0 .13-.01-1.23 3.64-4.7 6.18-8.64 6.18ZM13 17c0 .55-.45 1-1 1s-1-.45-1-1 .45-1 1-1 1 .45 1 1Zm5.29-12.3a.99.99 0 0 1-.29-.71c0-.55.45-.99 1-.99a1 1 0 0 1 .71.3c.19.19.29.44.29.71 0 .55-.45.99-1 .99a1 1 0 0 1-.71-.3ZM9 13.5c0 .83-.67 1.5-1.5 1.5S6 14.33 6 13.5 6.67 12 7.5 12s1.5.67 1.5 1.5Zm3.25.81a.744.744 0 0 1-.06-1.05c.28-.32.75-.34 1.05-.06.31.28.33.75.05 1.06-.15.16-.35.25-.56.25-.18 0-.36-.06-.5-.19ZM8.68 7.26c.41.37.44 1 .07 1.41-.2.22-.47.33-.75.33a.96.96 0 0 1-.67-.26c-.41-.37-.44-1-.07-1.41.37-.42 1-.45 1.41-.08Zm11.48 1.88c.18-.19.52-.19.7 0 .05.04.09.1.11.16.03.06.04.12.04.19 0 .13-.05.26-.15.35-.09.1-.22.15-.35.15s-.26-.05-.35-.15a.355.355 0 0 1-.11-.16.433.433 0 0 1-.04-.19c0-.13.05-.26.15-.35Zm-4.93-1.86a.75.75 0 1 1 1.059-1.06.75.75 0 0 1-1.059 1.06Z"/></svg></button></div><script>window.dataLayer = window.dataLayer || [];
+                function gtag() { dataLayer.push(arguments); }
+
+                window.publiiCBGCM = {
+                    defaultState: {"ad_storage":false,"ad_personalization":false,"ad_user_data":false,"analytics_storage":true,"personalization_storage":false,"functionality_storage":false,"security_storage":false},
+                    groups: [{"cookieGroup":"","ad_storage":false,"ad_personalization":false,"ad_user_data":false,"analytics_storage":true,"personalization_storage":false,"functionality_storage":false,"security_storage":false}]
+                };
+            
+            (function(win) {
+    if (!document.querySelector('.pcb')) {
+        return;
+    }
+
+    var cbConfig = {
+        behaviour: document.querySelector('.pcb').getAttribute('data-behaviour'),
+        behaviourLink: document.querySelector('.pcb').getAttribute('data-behaviour-link'),
+        revision: document.querySelector('.pcb').getAttribute('data-revision'),
+        configTTL: parseInt(document.querySelector('.pcb').getAttribute('data-config-ttl'), 10),
+        debugMode: document.querySelector('.pcb').getAttribute('data-debug-mode') === 'true',
+        initialState: null,
+        initialLsState: null,
+        previouslyAccepted: []
+    };
+
+    var cbUI = {
+        wrapper: document.querySelector('.pcb'),
+        banner: {
+            element: null,
+            btnAccept: null,
+            btnReject: null,
+            btnConfigure: null
+        },
+        popup: {
+            element: null,
+            btnClose: null,
+            btnSave: null,
+            btnAccept: null,
+            btnReject: null,
+            checkboxes: null,
+        },
+        overlay: null,
+        badge: null,
+        blockedScripts: document.querySelectorAll('script[type^="gdpr-blocker/"]'),
+        triggerLinks: cbConfig.behaviourLink ? document.querySelectorAll('a[href*="' + cbConfig.behaviourLink + '"]') : null
+    };
+
+    function initUI () {
+        // setup banner elements
+        cbUI.banner.element = cbUI.wrapper.querySelector('.pcb__banner');
+        cbUI.banner.btnAccept = cbUI.banner.element.querySelector('.pcb__btn--accept');
+        cbUI.banner.btnReject = cbUI.banner.element.querySelector('.pcb__btn--reject');
+        cbUI.banner.btnConfigure = cbUI.banner.element.querySelector('.pcb__btn--configure');
+
+        // setup popup elements
+        if (cbUI.wrapper.querySelector('.pcb__popup')) {
+            cbUI.popup.element = cbUI.wrapper.querySelector('.pcb__popup');
+            cbUI.popup.btnClose = cbUI.wrapper.querySelector('.pcb__popup__close');
+            cbUI.popup.btnSave = cbUI.popup.element.querySelector('.pcb__btn--save');
+            cbUI.popup.btnAccept = cbUI.popup.element.querySelector('.pcb__btn--accept');
+            cbUI.popup.btnReject = cbUI.popup.element.querySelector('.pcb__btn--reject');
+            cbUI.popup.checkboxes = cbUI.popup.element.querySelector('input[type="checkbox"]');
+            // setup overlay
+            cbUI.overlay = cbUI.wrapper.querySelector('.pcb__overlay');
+        }
+
+        cbUI.badge = cbUI.wrapper.querySelector('.pcb__badge');
+
+        if (cbConfig.behaviour.indexOf('link') > -1) {
+            for (var i = 0; i < cbUI.triggerLinks.length; i++) {
+                cbUI.triggerLinks[i].addEventListener('click', function(e) {
+                    e.preventDefault();
+                    showBannerOrPopup();
+                });
+            }
+        }
+    }
+
+    function initState () {
+        var lsKeyName = getConfigName();
+        var currentConfig = localStorage.getItem(lsKeyName);
+        var configIsFresh = checkIfConfigIsFresh();
+
+        if (!configIsFresh || currentConfig === null) {
+            if (cbConfig.debugMode) {
+                console.log('🍪 Config not found, or configuration expired');
+            }
+
+            if (window.publiiCBGCM) {
+                gtag('consent', 'default', {
+                    'ad_storage': window.publiiCBGCM.defaultState.ad_storage ? 'granted' : 'denied',
+                    'ad_personalization': window.publiiCBGCM.defaultState.ad_personalization ? 'granted' : 'denied',
+                    'ad_user_data': window.publiiCBGCM.defaultState.ad_user_data ? 'granted' : 'denied',
+                    'analytics_storage': window.publiiCBGCM.defaultState.analytics_storage ? 'granted' : 'denied',
+                    'personalization_storage': window.publiiCBGCM.defaultState.personalization_storage ? 'granted' : 'denied',
+                    'functionality_storage': window.publiiCBGCM.defaultState.functionality_storage ? 'granted' : 'denied',
+                    'security_storage': window.publiiCBGCM.defaultState.security_storage ? 'granted' : 'denied'
+                });  
+                
+                if (cbConfig.debugMode) {
+                    console.log('🍪 GCMv2 DEFAULT STATE: ' + JSON.stringify({
+                        'ad_storage': window.publiiCBGCM.defaultState.ad_storage ? 'granted' : 'denied',
+                        'ad_personalization': window.publiiCBGCM.defaultState.ad_personalization ? 'granted' : 'denied',
+                        'ad_user_data': window.publiiCBGCM.defaultState.ad_user_data ? 'granted' : 'denied',
+                        'analytics_storage': window.publiiCBGCM.defaultState.analytics_storage ? 'granted' : 'denied',
+                        'personalization_storage': window.publiiCBGCM.defaultState.personalization_storage ? 'granted' : 'denied',
+                        'functionality_storage': window.publiiCBGCM.defaultState.functionality_storage ? 'granted' : 'denied',
+                        'security_storage': window.publiiCBGCM.defaultState.security_storage ? 'granted' : 'denied'
+                    }));
+                }
+            }
+
+            showBanner();
+        } else if (typeof currentConfig === 'string') {
+            if (cbConfig.debugMode) {
+                console.log('🍪 Config founded');
+            }
+
+            cbConfig.initialLsState = currentConfig.split(',');
+
+            if (window.publiiCBGCM) {
+                gtag('consent', 'default', {
+                    'ad_storage': getDefaultConsentState(currentConfig, 'ad_storage'),
+                    'ad_personalization': getDefaultConsentState(currentConfig, 'ad_personalization'),
+                    'ad_user_data': getDefaultConsentState(currentConfig, 'ad_user_data'),
+                    'analytics_storage': getDefaultConsentState(currentConfig, 'analytics_storage'),
+                    'personalization_storage': getDefaultConsentState(currentConfig, 'personalization_storage'),
+                    'functionality_storage': getDefaultConsentState(currentConfig, 'functionality_storage'),
+                    'security_storage': getDefaultConsentState(currentConfig, 'security_storage')
+                });
+                
+                if (cbConfig.debugMode) {
+                    console.log('🍪 GCMv2 DEFAULT STATE: ' + JSON.stringify({
+                        'ad_storage': getDefaultConsentState(currentConfig, 'ad_storage'),
+                        'ad_personalization': getDefaultConsentState(currentConfig, 'ad_personalization'),
+                        'ad_user_data': getDefaultConsentState(currentConfig, 'ad_user_data'),
+                        'analytics_storage': getDefaultConsentState(currentConfig, 'analytics_storage'),
+                        'personalization_storage': getDefaultConsentState(currentConfig, 'personalization_storage'),
+                        'functionality_storage': getDefaultConsentState(currentConfig, 'functionality_storage'),
+                        'security_storage': getDefaultConsentState(currentConfig, 'security_storage')
+                    }));
+                }
+            }
+
+            showBadge();
+
+            if (cbUI.popup.element) {
+                var allowedGroups = currentConfig.split(',');
+                var checkedCheckboxes = cbUI.popup.element.querySelectorAll('input[type="checkbox"]:checked');
+
+                for (var j = 0; j < checkedCheckboxes.length; j++) {
+                    var name = checkedCheckboxes[j].getAttribute('data-group-name');
+
+                    if (name && name !== '-' && allowedGroups.indexOf(name) === -1) {
+                        checkedCheckboxes[j].checked = false;
+                    }
+                }
+
+                for (var i = 0; i < allowedGroups.length; i++) {
+                    var checkbox = cbUI.popup.element.querySelector('input[type="checkbox"][data-group-name="' + allowedGroups[i] + '"]');
+
+                    if (checkbox) {
+                        checkbox.checked = true;
+                    }
+
+                    allowCookieGroup(allowedGroups[i]);
+                }
+            }
+        }
+
+        setTimeout(function () {
+            cbConfig.initialState = getInitialStateOfConsents();
+        }, 0);
+    }
+
+    function checkIfConfigIsFresh () {
+        var lastConfigSave = localStorage.getItem('publii-gdpr-cookies-config-save-date');
+
+        if (lastConfigSave === null) {
+            return false;
+        }
+
+        lastConfigSave = parseInt(lastConfigSave, 10);
+
+        if (lastConfigSave === 0) {
+            return true;
+        }
+
+        if (+new Date() - lastConfigSave < cbConfig.configTTL * 24 * 60 * 60 * 1000) {
+            return true;
+        }
+
+        return false;
+    }
+
+    function getDefaultConsentState (currentConfig, consentGroup) {
+        let configGroups = currentConfig.split(',');
+
+        for (let i = 0; i < configGroups.length; i++) {
+            let groupName = configGroups[i];
+            let group = window.publiiCBGCM.groups.find(group => group.cookieGroup === groupName);
+
+            if (group && group[consentGroup]) {
+                return 'granted';
+            }
+        }  
+        
+        if (window.publiiCBGCM.defaultState[consentGroup]) {
+            return 'granted'; 
+        }
+        
+        return 'denied';
+    }
+
+    function initBannerEvents () {
+        cbUI.banner.btnAccept.addEventListener('click', function (e) {
+            e.preventDefault();
+            acceptAllCookies('banner');
+            showBadge();
+        }, false);
+
+        if (cbUI.banner.btnReject) {
+            cbUI.banner.btnReject.addEventListener('click', function (e) {
+                e.preventDefault();
+                rejectAllCookies();
+                showBadge();
+            }, false);
+        }
+
+        if (cbUI.banner.btnConfigure) {
+            cbUI.banner.btnConfigure.addEventListener('click', function (e) {
+                e.preventDefault();
+                hideBanner();
+                showAdvancedPopup();
+                showBadge();
+            }, false);
+        }
+    }
+
+    function initPopupEvents () {
+        if (!cbUI.popup.element) {
+            return;
+        }
+
+        cbUI.overlay.addEventListener('click', function (e) {
+            hideAdvancedPopup();
+        }, false);
+
+        cbUI.popup.element.addEventListener('click', function (e) {
+            e.stopPropagation();
+        }, false);
+
+        cbUI.popup.btnAccept.addEventListener('click', function (e) {
+            e.preventDefault();
+            acceptAllCookies('popup');
+        }, false);
+
+        cbUI.popup.btnReject.addEventListener('click', function (e) {
+            e.preventDefault();
+            rejectAllCookies();
+        }, false);
+
+        cbUI.popup.btnSave.addEventListener('click', function (e) {
+            e.preventDefault();
+            saveConfiguration();
+        }, false);
+
+        cbUI.popup.btnClose.addEventListener('click', function (e) {
+            e.preventDefault();
+            hideAdvancedPopup();
+        }, false);
+    }
+
+    function initBadgeEvents () {
+        if (!cbUI.badge) {
+            return;
+        }
+
+        cbUI.badge.addEventListener('click', function (e) {
+            showBannerOrPopup();
+        }, false);
+    }
+
+    initUI();
+    initState();
+    initBannerEvents();
+    initPopupEvents();
+    initBadgeEvents();
+
+    /**
+     * API
+     */
+    function addScript (src, inline) {
+        var newScript = document.createElement('script');
+
+        if (src) {
+            newScript.setAttribute('src', src);
+        }
+
+        if (inline) {
+            newScript.text = inline;
+        }
+
+        document.body.appendChild(newScript);
+    }
+
+    function allowCookieGroup (allowedGroup) {
+        var scripts = document.querySelectorAll('script[type="gdpr-blocker/' + allowedGroup + '"]');
+        cbConfig.previouslyAccepted.push(allowedGroup);
+    
+        for (var j = 0; j < scripts.length; j++) {
+            addScript(scripts[j].src, scripts[j].text);
+        }
+
+        var groupEvent = new Event('publii-cookie-banner-unblock-' + allowedGroup);
+        document.body.dispatchEvent(groupEvent);
+        unlockEmbeds(allowedGroup);
+
+        if (cbConfig.debugMode) {
+            console.log('🍪 Allowed group: ' + allowedGroup);
+        }
+
+        if (window.publiiCBGCM && (!cbConfig.initialLsState || cbConfig.initialLsState.indexOf(allowedGroup) === -1)) {
+            let consentResult = {};
+            let group = window.publiiCBGCM.groups.find(group => group.cookieGroup === allowedGroup);
+
+            if (group) {
+                let foundSomeConsents = false;
+
+                Object.keys(group).forEach(key => {
+                    if (key !== 'cookieGroup' && group[key] === true) {
+                        consentResult[key] = 'granted';
+                        foundSomeConsents = true;
+                    }
+                });
+
+                if (foundSomeConsents) {
+                    gtag('consent', 'update', consentResult);   
+
+                    if (cbConfig.debugMode) {
+                        console.log('🍪 GCMv2 UPDATE: ' + JSON.stringify(consentResult));
+                    }
+                }
+            }
+        }
+    }
+
+    function showBannerOrPopup () {
+        if (cbUI.popup.element) {
+            showAdvancedPopup();
+        } else {
+            showBanner();
+        }
+    }
+
+    function showAdvancedPopup () {
+        cbUI.popup.element.classList.add('is-visible');
+        cbUI.overlay.classList.add('is-visible');
+        cbUI.popup.element.setAttribute('aria-hidden', 'false');
+        cbUI.overlay.setAttribute('aria-hidden', 'false');
+    }
+
+    function hideAdvancedPopup () {
+        cbUI.popup.element.classList.remove('is-visible');
+        cbUI.overlay.classList.remove('is-visible');
+        cbUI.popup.element.setAttribute('aria-hidden', 'true');
+        cbUI.overlay.setAttribute('aria-hidden', 'true');
+    }
+
+    function showBanner () {
+        cbUI.banner.element.classList.add('is-visible');
+        cbUI.banner.element.setAttribute('aria-hidden', 'false');
+    }
+
+    function hideBanner () {
+        cbUI.banner.element.classList.remove('is-visible');
+        cbUI.banner.element.setAttribute('aria-hidden', 'true');
+    }
+
+    function showBadge () {
+        if (!cbUI.badge) {
+            return;
+        }
+
+        cbUI.badge.classList.add('is-visible');
+        cbUI.badge.setAttribute('aria-hidden', 'false');
+    }
+
+    function getConfigName () {
+        var lsKeyName = 'publii-gdpr-allowed-cookies';
+
+        if (cbConfig.revision) {
+            lsKeyName = lsKeyName + '-v' + parseInt(cbConfig.revision, 10);
+        }
+
+        return lsKeyName;
+    }
+
+    function storeConfiguration (allowedGroups) {
+        var lsKeyName = getConfigName();
+        var dataToStore = allowedGroups.join(',');
+        localStorage.setItem(lsKeyName, dataToStore);
+
+        if (cbConfig.configTTL === 0) {
+            localStorage.setItem('publii-gdpr-cookies-config-save-date', 0);
+
+            if (cbConfig.debugMode) {
+                console.log('🍪 Store never expiring configuration');
+            }
+        } else {
+            localStorage.setItem('publii-gdpr-cookies-config-save-date', +new Date());
+        }
+    }
+
+    function getInitialStateOfConsents () {
+        if (!cbUI.popup.element) {
+            return [];
+        }
+
+        var checkedGroups = cbUI.popup.element.querySelectorAll('input[type="checkbox"]:checked');
+        var groups = [];
+
+        for (var i = 0; i < checkedGroups.length; i++) {
+            var allowedGroup = checkedGroups[i].getAttribute('data-group-name');
+
+            if (allowedGroup !== '') {
+                groups.push(allowedGroup);
+            }
+        }
+
+        if (cbConfig.debugMode) {
+            console.log('🍪 Initial state: ' + groups.join(', '));
+        }
+
+        return groups;
+    }
+
+    function getCurrentStateOfConsents () {
+        if (!cbUI.popup.element) {
+            return [];
+        }
+
+        var checkedGroups = cbUI.popup.element.querySelectorAll('input[type="checkbox"]:checked');
+        var groups = [];
+
+        for (var i = 0; i < checkedGroups.length; i++) {
+            var allowedGroup = checkedGroups[i].getAttribute('data-group-name');
+
+            if (allowedGroup !== '') {
+                groups.push(allowedGroup);
+            }
+        }
+
+        if (cbConfig.debugMode) {
+            console.log('🍪 State to save: ' + groups.join(', '));
+        }
+
+        return groups;
+    }
+
+    function getAllGroups () {
+        if (!cbUI.popup.element) {
+            return [];
+        }
+
+        var checkedGroups = cbUI.popup.element.querySelectorAll('input[type="checkbox"]');
+        var groups = [];
+
+        for (var i = 0; i < checkedGroups.length; i++) {
+            var allowedGroup = checkedGroups[i].getAttribute('data-group-name');
+
+            if (allowedGroup !== '') {
+                groups.push(allowedGroup);
+            }
+        }
+
+        return groups;
+    }
+
+    function acceptAllCookies (source) {
+        var groupsToAccept = getAllGroups();
+        storeConfiguration(groupsToAccept);
+
+        for (var i = 0; i < groupsToAccept.length; i++) {
+            var group = groupsToAccept[i];
+
+            if (cbConfig.initialState.indexOf(group) > -1 || cbConfig.previouslyAccepted.indexOf(group) > -1) {
+                if (cbConfig.debugMode) {
+                    console.log('🍪 Skip previously activated group: ' + group);
+                }
+
+                continue;
+            }
+
+            allowCookieGroup(group);
+        }
+
+        if (cbUI.popup.element) {
+            var checkboxesToCheck = cbUI.popup.element.querySelectorAll('input[type="checkbox"]');
+
+            for (var j = 0; j < checkboxesToCheck.length; j++) {
+                checkboxesToCheck[j].checked = true;
+            }
+        }
+
+        if (cbConfig.debugMode) {
+            console.log('🍪 Accept all cookies: ', groupsToAccept.join(', '));
+        }
+
+        if (source === 'popup') {
+            hideAdvancedPopup();
+        } else if (source === 'banner') {
+            hideBanner();
+        }
+    }
+
+    function rejectAllCookies () {
+        if (cbConfig.debugMode) {
+            console.log('🍪 Reject all cookies');
+        }
+
+        storeConfiguration([]);
+        setTimeout(function () {
+            window.location.reload();
+        }, 100);
+    }
+
+    function saveConfiguration () {
+        var groupsToAccept = getCurrentStateOfConsents();
+        storeConfiguration(groupsToAccept);
+
+        if (cbConfig.debugMode) {
+            console.log('🍪 Save new config: ', groupsToAccept.join(', '));
+        }
+
+        if (reloadIsNeeded(groupsToAccept)) {
+            setTimeout(function () {
+                window.location.reload();
+            }, 100);
+            return;
+        }
+
+        for (var i = 0; i < groupsToAccept.length; i++) {
+            var group = groupsToAccept[i];
+
+            if (cbConfig.initialState.indexOf(group) > -1 || cbConfig.previouslyAccepted.indexOf(group) > -1) {
+                if (cbConfig.debugMode) {
+                    console.log('🍪 Skip previously activated group: ' + group);
+                }
+
+                continue;
+            }
+
+            allowCookieGroup(group);
+        }
+
+        hideAdvancedPopup();
+    }
+
+    function reloadIsNeeded (groupsToAccept) {
+        // check if user rejected consent for initial groups
+        var initialGroups = cbConfig.initialState;
+        var previouslyAcceptedGroups = cbConfig.previouslyAccepted;
+        var groupsToCheck = initialGroups.concat(previouslyAcceptedGroups);
+
+        for (var i = 0; i < groupsToCheck.length; i++) {
+            var groupToCheck = groupsToCheck[i];
+
+            if (groupToCheck !== '' && groupsToAccept.indexOf(groupToCheck) === -1) {
+                if (cbConfig.debugMode) {
+                    console.log('🍪 Reload is needed due lack of: ', groupToCheck);
+                }
+
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    function unlockEmbeds (cookieGroup) {
+        var iframesToUnlock = document.querySelectorAll('.pec-wrapper[data-consent-group-id="' + cookieGroup + '"]');
+
+        for (var i = 0; i < iframesToUnlock.length; i++) {
+            var iframeWrapper = iframesToUnlock[i];
+            iframeWrapper.querySelector('.pec-overlay').classList.remove('is-active');
+            iframeWrapper.querySelector('.pec-overlay').setAttribute('aria-hidden', 'true');
+            var iframe = iframeWrapper.querySelector('iframe');
+            iframe.setAttribute('src', iframe.getAttribute('data-consent-src'));
+        }
+    }
+
+    win.publiiEmbedConsentGiven = function (cookieGroup) {
+        // it will unlock embeds
+        allowCookieGroup(cookieGroup);
+
+        var checkbox = cbUI.popup.element.querySelector('input[type="checkbox"][data-group-name="' + cookieGroup + '"]');
+
+        if (checkbox) {
+            checkbox.checked = true;
+        }
+
+        var groupsToAccept = getCurrentStateOfConsents();
+        storeConfiguration(groupsToAccept);
+
+        if (cbConfig.debugMode) {
+            console.log('🍪 Save new config: ', groupsToAccept.join(', '));
+        }
+    }
+})(window);</script></body></html>

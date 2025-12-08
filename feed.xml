@@ -3,12 +3,33 @@
     <title>The Honest Coder</title>
     <link href="https://thehonestcoder.com/feed.xml" rel="self" />
     <link href="https://thehonestcoder.com" />
-    <updated>2025-11-16T22:07:50+02:00</updated>
+    <updated>2025-12-08T22:59:17+02:00</updated>
     <author>
         <name>Tautvydas Versockas</name>
     </author>
     <id>https://thehonestcoder.com</id>
 
+    <entry>
+        <title>Reliable Event Publishing: Outbox Pattern with PostgreSQL, Debezium, and Kafka</title>
+        <author>
+            <name>Tautvydas Versockas</name>
+        </author>
+        <link href="https://thehonestcoder.com/outbox-pattern-debezium-kafka/"/>
+        <id>https://thehonestcoder.com/outbox-pattern-debezium-kafka/</id>
+        <media:content url="https://thehonestcoder.com/media/posts/23/outbox-debesium-featured.png" medium="image" />
+            <category term="System Design"/>
+            <category term="Databases"/>
+
+        <updated>2025-12-08T14:59:33+02:00</updated>
+            <summary>
+                <![CDATA[
+                        <img src="https://thehonestcoder.com/media/posts/23/outbox-debesium-featured.png" alt="PostgreSQL, Debezium, and Kafka." />
+                    <p>Learn how to implement the Outbox pattern with PostgreSQL, Debezium, and Kafka (using Redpanda).</p>
+
+                ]]>
+            </summary>
+        <content></content>
+    </entry>
     <entry>
         <title>14 Simple Steps That Make You Instantly Safer on the Internet</title>
         <author>
@@ -187,26 +208,6 @@
                 <![CDATA[
                         <img src="https://thehonestcoder.com/media/posts/18/one-table-to-rule-them-all-featured.webp" alt="One table to rule them all - Lord of The Rings." />
                     <p>Learn to design and build multilingual software applications for global audiences.</p>
-
-                ]]>
-            </summary>
-        <content></content>
-    </entry>
-    <entry>
-        <title>Redpanda - A New Cool Kid on the Event Streaming Block</title>
-        <author>
-            <name>Tautvydas Versockas</name>
-        </author>
-        <link href="https://thehonestcoder.com/redpanda-a-new-cool-kid-on-the-event-streaming-block/"/>
-        <id>https://thehonestcoder.com/redpanda-a-new-cool-kid-on-the-event-streaming-block/</id>
-        <media:content url="https://thehonestcoder.com/media/posts/16/redpanda-featured.webp" medium="image" />
-            <category term="System Design"/>
-
-        <updated>2022-02-20T12:00:00+02:00</updated>
-            <summary>
-                <![CDATA[
-                        <img src="https://thehonestcoder.com/media/posts/16/redpanda-featured.webp" alt="Redpanda logo." />
-                    <p>Redpanda - ZooKeeper-free, JVM-free, Kafka compatible, and up to 10 times faster than Kafka. What's not to like!</p>
 
                 ]]>
             </summary>

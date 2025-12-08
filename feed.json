@@ -11,6 +11,22 @@
     },
     "items": [
         {
+            "id": "https://thehonestcoder.com/outbox-pattern-debezium-kafka/",
+            "url": "https://thehonestcoder.com/outbox-pattern-debezium-kafka/",
+            "title": "Reliable Event Publishing: Outbox Pattern with PostgreSQL, Debezium, and Kafka",
+            "summary": "<p>Learn how to implement the Outbox pattern with PostgreSQL, Debezium, and Kafka (using Redpanda).</p>\n",
+            "image": "https://thehonestcoder.com/media/posts/23/outbox-debesium-featured.png",
+            "author": {
+                "name": "Tautvydas Versockas"
+            },
+            "tags": [
+                   "System Design",
+                   "Databases"
+            ],
+            "date_published": "2025-12-08T14:59:33+02:00",
+            "date_modified": "2025-12-08T22:59:17+02:00"
+        },
+        {
             "id": "https://thehonestcoder.com/14-simple-steps-that-make-you-instantly-safer-on-the-internet/",
             "url": "https://thehonestcoder.com/14-simple-steps-that-make-you-instantly-safer-on-the-internet/",
             "title": "14 Simple Steps That Make You Instantly Safer on the Internet",
@@ -23,7 +39,7 @@
                    "Security"
             ],
             "date_published": "2025-11-16T20:32:32+02:00",
-            "date_modified": "2025-11-16T22:07:50+02:00"
+            "date_modified": "2025-12-08T16:16:37+02:00"
         },
         {
             "id": "https://thehonestcoder.com/are-code-reviews-killing-your-delivery-speed/",
@@ -147,21 +163,6 @@
             ],
             "date_published": "2022-09-20T00:00:00+03:00",
             "date_modified": "2025-01-12T18:26:57+02:00"
-        },
-        {
-            "id": "https://thehonestcoder.com/redpanda-a-new-cool-kid-on-the-event-streaming-block/",
-            "url": "https://thehonestcoder.com/redpanda-a-new-cool-kid-on-the-event-streaming-block/",
-            "title": "Redpanda - A New Cool Kid on the Event Streaming Block",
-            "summary": "<p>Redpanda - ZooKeeper-free, JVM-free, Kafka compatible, and up to 10 times faster than Kafka. What's not to like!</p>\n",
-            "image": "https://thehonestcoder.com/media/posts/16/redpanda-featured.webp",
-            "author": {
-                "name": "Tautvydas Versockas"
-            },
-            "tags": [
-                   "System Design"
-            ],
-            "date_published": "2022-02-20T12:00:00+02:00",
-            "date_modified": "2025-01-12T00:09:50+02:00"
         }
     ]
 }

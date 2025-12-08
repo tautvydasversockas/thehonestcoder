@@ -6,7 +6,7 @@
 </url>
 <url>
 <loc>https://thehonestcoder.com/14-simple-steps-that-make-you-instantly-safer-on-the-internet/</loc>
-<lastmod>2025-11-16T22:07:50+02:00</lastmod>
+<lastmod>2025-12-08T16:16:37+02:00</lastmod>
 <image:image>
 <image:loc>https://thehonestcoder.com/media/posts/22/simple-steps-that-make-you-instantly-safer-featured.webp</image:loc>
 <image:title><![CDATA[A knight on the internet.]]></image:title>
@@ -209,6 +209,26 @@
 <image:image>
 <image:loc>https://thehonestcoder.com/media/posts/13/heart-featured.webp</image:loc>
 <image:title><![CDATA[A heart.]]></image:title>
+</image:image>
+</url>
+<url>
+<loc>https://thehonestcoder.com/outbox-pattern-debezium-kafka/</loc>
+<lastmod>2025-12-08T22:59:17+02:00</lastmod>
+<image:image>
+<image:loc>https://thehonestcoder.com/media/posts/23/outbox-debesium-featured.png</image:loc>
+<image:title><![CDATA[PostgreSQL, Debezium, and Kafka.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://thehonestcoder.com/media/posts/23/debezium-postgres-users-2.webp</image:loc>
+<image:title><![CDATA[PostgreSQL 'users' table.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://thehonestcoder.com/media/posts/23/debezium-postgres-outbox.webp</image:loc>
+<image:title><![CDATA[PostgreSQL 'outbox' table.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://thehonestcoder.com/media/posts/23/debezium-redpanda.webp</image:loc>
+<image:title><![CDATA[Redpanda 'user-service-events' topic.]]></image:title>
 </image:image>
 </url>
 <url>
