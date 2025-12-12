@@ -3,12 +3,33 @@
     <title>The Honest Coder</title>
     <link href="https://thehonestcoder.com/feed.xml" rel="self" />
     <link href="https://thehonestcoder.com" />
-    <updated>2025-12-10T19:14:06+02:00</updated>
+    <updated>2025-12-12T21:48:17+02:00</updated>
     <author>
         <name>Tautvydas Versockas</name>
     </author>
     <id>https://thehonestcoder.com</id>
 
+    <entry>
+        <title>Reliable Event Publishing: Outbox Pattern with PostgreSQL, Debezium, and Kafka (Part II)</title>
+        <author>
+            <name>Tautvydas Versockas</name>
+        </author>
+        <link href="https://thehonestcoder.com/outbox-pattern-debezium-kafka-2/"/>
+        <id>https://thehonestcoder.com/outbox-pattern-debezium-kafka-2/</id>
+        <media:content url="https://thehonestcoder.com/media/posts/24/outbox-debesium-featured.webp" medium="image" />
+            <category term="System Design"/>
+            <category term="Databases"/>
+
+        <updated>2025-12-11T19:42:47+02:00</updated>
+            <summary>
+                <![CDATA[
+                        <img src="https://thehonestcoder.com/media/posts/24/outbox-debesium-featured.webp" alt="PostgreSQL, Debezium, and Kafka." />
+                    <p data-start="390" data-end="477">In the first article, we built a solid Outbox PostgreSQL-Debezium-Kafka setup. In this follow-up, I’ll show how to make it <em>harder, better, faster, stronger</em> - Daft Punk style.</p>
+
+                ]]>
+            </summary>
+        <content></content>
+    </entry>
     <entry>
         <title>Reliable Event Publishing: Outbox Pattern with PostgreSQL, Debezium, and Kafka</title>
         <author>
@@ -24,7 +45,7 @@
             <summary>
                 <![CDATA[
                         <img src="https://thehonestcoder.com/media/posts/23/outbox-debesium-featured.png" alt="PostgreSQL, Debezium, and Kafka." />
-                    <p>Learn how to implement the Outbox pattern with PostgreSQL, Debezium, and Kafka (using Redpanda).</p>
+                    <p>Learn how to implement the Outbox pattern with PostgreSQL, Debezium, and Kafka.</p>
 
                 ]]>
             </summary>
@@ -187,27 +208,6 @@
                 <![CDATA[
                         <img src="https://thehonestcoder.com/media/posts/17/message-types-featured.webp" alt="Message types." />
                     <p>Abusing message types in message-driven systems may result in bloated messages, unclear intent, or impossible-to-understand data flows.</p>
-
-                ]]>
-            </summary>
-        <content></content>
-    </entry>
-    <entry>
-        <title>Building Multilingual Relational Databases: Approaches and Tradeoffs</title>
-        <author>
-            <name>Tautvydas Versockas</name>
-        </author>
-        <link href="https://thehonestcoder.com/building-multilingual-relational-databases/"/>
-        <id>https://thehonestcoder.com/building-multilingual-relational-databases/</id>
-        <media:content url="https://thehonestcoder.com/media/posts/18/one-table-to-rule-them-all-featured.webp" medium="image" />
-            <category term="System Design"/>
-            <category term="Databases"/>
-
-        <updated>2022-09-20T00:00:00+03:00</updated>
-            <summary>
-                <![CDATA[
-                        <img src="https://thehonestcoder.com/media/posts/18/one-table-to-rule-them-all-featured.webp" alt="One table to rule them all - Lord of The Rings." />
-                    <p>Learn to design and build multilingual software applications for global audiences.</p>
 
                 ]]>
             </summary>

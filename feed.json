@@ -11,10 +11,26 @@
     },
     "items": [
         {
+            "id": "https://thehonestcoder.com/outbox-pattern-debezium-kafka-2/",
+            "url": "https://thehonestcoder.com/outbox-pattern-debezium-kafka-2/",
+            "title": "Reliable Event Publishing: Outbox Pattern with PostgreSQL, Debezium, and Kafka (Part II)",
+            "summary": "<p data-start=\"390\" data-end=\"477\">In the first article, we built a solid Outbox PostgreSQL-Debezium-Kafka setup. In this follow-up, I’ll show how to make it <em>harder, better, faster, stronger</em> - Daft Punk style.</p>\n",
+            "image": "https://thehonestcoder.com/media/posts/24/outbox-debesium-featured.webp",
+            "author": {
+                "name": "Tautvydas Versockas"
+            },
+            "tags": [
+                   "System Design",
+                   "Databases"
+            ],
+            "date_published": "2025-12-11T19:42:47+02:00",
+            "date_modified": "2025-12-12T21:48:17+02:00"
+        },
+        {
             "id": "https://thehonestcoder.com/outbox-pattern-debezium-kafka/",
             "url": "https://thehonestcoder.com/outbox-pattern-debezium-kafka/",
             "title": "Reliable Event Publishing: Outbox Pattern with PostgreSQL, Debezium, and Kafka",
-            "summary": "<p>Learn how to implement the Outbox pattern with PostgreSQL, Debezium, and Kafka (using Redpanda).</p>\n",
+            "summary": "<p>Learn how to implement the Outbox pattern with PostgreSQL, Debezium, and Kafka.</p>\n",
             "image": "https://thehonestcoder.com/media/posts/23/outbox-debesium-featured.png",
             "author": {
                 "name": "Tautvydas Versockas"
@@ -24,7 +40,7 @@
                    "Databases"
             ],
             "date_published": "2025-12-08T14:59:33+02:00",
-            "date_modified": "2025-12-10T19:14:06+02:00"
+            "date_modified": "2025-12-12T19:54:11+02:00"
         },
         {
             "id": "https://thehonestcoder.com/14-simple-steps-that-make-you-instantly-safer-on-the-internet/",
@@ -147,22 +163,6 @@
             ],
             "date_published": "2022-10-04T00:00:00+03:00",
             "date_modified": "2025-08-26T10:53:51+03:00"
-        },
-        {
-            "id": "https://thehonestcoder.com/building-multilingual-relational-databases/",
-            "url": "https://thehonestcoder.com/building-multilingual-relational-databases/",
-            "title": "Building Multilingual Relational Databases: Approaches and Tradeoffs",
-            "summary": "<p>Learn to design and build multilingual software applications for global audiences.</p>\n",
-            "image": "https://thehonestcoder.com/media/posts/18/one-table-to-rule-them-all-featured.webp",
-            "author": {
-                "name": "Tautvydas Versockas"
-            },
-            "tags": [
-                   "System Design",
-                   "Databases"
-            ],
-            "date_published": "2022-09-20T00:00:00+03:00",
-            "date_modified": "2025-01-12T18:26:57+02:00"
         }
     ]
 }

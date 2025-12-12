@@ -213,7 +213,7 @@
 </url>
 <url>
 <loc>https://thehonestcoder.com/outbox-pattern-debezium-kafka/</loc>
-<lastmod>2025-12-10T19:14:06+02:00</lastmod>
+<lastmod>2025-12-12T19:54:11+02:00</lastmod>
 <image:image>
 <image:loc>https://thehonestcoder.com/media/posts/23/outbox-debesium-featured.png</image:loc>
 <image:title><![CDATA[PostgreSQL, Debezium, and Kafka.]]></image:title>
@@ -229,6 +229,22 @@
 <image:image>
 <image:loc>https://thehonestcoder.com/media/posts/23/debezium-redpanda.webp</image:loc>
 <image:title><![CDATA[Redpanda 'user-service-events' topic.]]></image:title>
+</image:image>
+</url>
+<url>
+<loc>https://thehonestcoder.com/outbox-pattern-debezium-kafka-2/</loc>
+<lastmod>2025-12-12T21:48:17+02:00</lastmod>
+<image:image>
+<image:loc>https://thehonestcoder.com/media/posts/24/outbox-debesium-featured.webp</image:loc>
+<image:title><![CDATA[PostgreSQL, Debezium, and Kafka.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://thehonestcoder.com/media/posts/24/debezium-2-redpanda-1.png</image:loc>
+<image:title><![CDATA[Kafka 'user_created' event value.]]></image:title>
+</image:image>
+<image:image>
+<image:loc>https://thehonestcoder.com/media/posts/24/debezium-2-redpanda-2.png</image:loc>
+<image:title><![CDATA[Kafka 'user_created' event headers.]]></image:title>
 </image:image>
 </url>
 <url>
